@@ -12,5 +12,6 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("Git works:)");
         System.out.println("Git works:)");
         System.out.println("Git works:)");
+        System.out.println("Zobi");
     }
 }
