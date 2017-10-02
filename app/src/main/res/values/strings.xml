@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">SporTeam</string>
 
-    <string name="userName">User Name</string>
+    <string name="mail">Email</string>
     <string name="password">Password</string>
     <string name="phone">Phone</string>
     <string name="genderMale">Male</string>

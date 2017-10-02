@@ -24,7 +24,7 @@
         android:layout_weight="10">
 
         <TextView
-            android:text="@string/userName"
+            android:text="@string/mail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/userLab"
@@ -127,7 +127,6 @@
             android:layout_height="wrap_content"
             android:id="@+id/regBut"
             android:layout_weight="1"
-            android:onClick="Register"
             style="@style/buttons"/>
 
         <Button
