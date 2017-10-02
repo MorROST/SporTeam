@@ -16,5 +16,6 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("Zobiss");
         System.out.println("i keep on testing");
         System.out.println("This is Mor's sout");
+        System.out.println("i keep on testing again meening 2");
     }
 }
