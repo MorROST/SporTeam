@@ -8,4 +8,19 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="fields">
+        <item name="android:background">#A0A0A0</item>
+        <item name="android:ems">10</item>
+    </style>
+
+    <style name="Labs">
+        <item name="android:textColor">#0000FF</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="buttons">
+        <item name="android:textColor">#47a8ed</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>

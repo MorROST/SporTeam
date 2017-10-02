@@ -1,9 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.yonimor.sporteam.sporteam.Register">
+    tools:context="com.yonimor.sporteam.sporteam.Register"
+    android:orientation="vertical"
+    android:weightSum="100">
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_weight="40"
+        android:layout_height="0dp">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10">
+
+        <TextView
+            android:text="@string/userName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/userLab"
+            android:layout_weight="2"
+            style="@style/Labs"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/userField"
+            android:layout_weight="1"
+            style="@style/fields"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10">
+
+        <TextView
+            android:text="@string/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/passLab"
+            android:layout_weight="2"
+            style="@style/Labs"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:id="@+id/passField"
+            android:layout_weight="1"
+            style="@style/fields"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10">
+
+        <TextView
+            android:text="@string/phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/idLab"
+            android:layout_weight="2"
+            style="@style/Labs"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/idField"
+            android:layout_weight="1"
+            style="@style/fields"/>
+    </LinearLayout>
+
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10"
+        android:id="@+id/genderGroup"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:text="@string/genderMale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/maleRBut"
+            android:layout_weight="1" />
+
+
+
+        <RadioButton
+            android:text="@string/genderFemale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/femaleRBUT"
+            android:layout_weight="1" />
+    </RadioGroup>
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10">
+
+        <Button
+            android:text="@string/register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/regBut"
+            android:layout_weight="1"
+            android:onClick="Register"
+            style="@style/buttons"/>
+
+        <Button
+            android:text="@string/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/backBut"
+            android:layout_weight="1"
+            style="@style/buttons"
+            android:onClick="back"/>
+
+    </LinearLayout>
+</LinearLayout>
