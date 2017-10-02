@@ -26,7 +26,7 @@ public class Register extends Activity {
         group.check(R.id.maleRBut);
         */
     }
-    public boolean ValidCheck()
+    public boolean validCheck()
     {
         if (userName.length()<4)
         {
