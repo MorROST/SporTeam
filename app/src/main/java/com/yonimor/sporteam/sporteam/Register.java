@@ -1,5 +1,6 @@
 package com.yonimor.sporteam.sporteam;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,7 +9,7 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-public class Register extends AppCompatActivity {
+public class Register extends Activity {
     EditText userName, password, id;
     RadioGroup group;
     String status;
@@ -16,13 +17,14 @@ public class Register extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
+/*
         userName = (EditText) findViewById(R.id.userField);
         password = (EditText) findViewById(R.id.passField);
         id = (EditText) findViewById(R.id.idField);
 
         group = (RadioGroup)findViewById(R.id.genderGroup);
         group.check(R.id.maleRBut);
+        */
     }
     public boolean ValidCheck()
     {

@@ -7,6 +7,89 @@
     android:layout_height="match_parent"
     tools:context="com.yonimor.sporteam.sporteam.Login"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen">
+    android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen"
+    android:weightSum="100">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="40"
+        android:orientation="horizontal">
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/email_txt_login"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/mail"
+            android:gravity="center"
+            android:ems="10"
+            android:textSize="24sp"
+            android:inputType="textEmailAddress"
+            android:background="@android:color/transparent"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/password_txt_login"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:ems="10"
+            android:background="@android:color/transparent"
+            android:inputType="textPassword"
+            android:textSize="24sp"
+            android:gravity="center"
+            android:hint="@string/password"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="20"
+        android:orientation="horizontal">
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="20"
+        android:orientation="horizontal"
+        android:weightSum="100">
+
+    <Button
+        android:id="@+id/login_btn_login"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="70"
+        android:onClick="login"
+
+        android:text="@string/login" />
+
+        <Button
+            android:id="@+id/register_btn_login"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="30"
+            android:onClick="move2Register"
+
+            android:text="@string/register" />
+
+    </LinearLayout>
+
+
 
 </LinearLayout>
