@@ -1,14 +1,13 @@
 <resources>
     <string name="app_name">SporTeam</string>
-$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+######################Register############################
     <string name="mail">Email</string>
     <string name="password">Password</string>
     <string name="phone">Phone</string>
     <string name="genderMale">Male</string>
     <string name="genderFemale">Female</string>
-    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     <string name="back">Back</string>
     <string name="register">Register</string>
-    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!S
+    ######################Login############################
     <string name="login">Login</string>
 </resources>
