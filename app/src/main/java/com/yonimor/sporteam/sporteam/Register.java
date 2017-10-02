@@ -24,7 +24,7 @@ public class Register extends AppCompatActivity {
         group = (RadioGroup)findViewById(R.id.genderGroup);
         group.check(R.id.maleRBut);
     }
-    public boolean ValidCheck()
+    public boolean validCheck()
     {
         if (userName.length()<4)
         {
