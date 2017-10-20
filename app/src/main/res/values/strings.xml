@@ -11,4 +11,13 @@
     <string name="login">Login</string>
     <string name="filterHeadLine">Filter</string>
     <string name="myGames">my games</string>
+    <string name="soccker">Soccker</string>
+    <string name="basketball">Basketball</string>
+    <string name="tennis">Tennis</string>
+    <string name="city">City</string>
+    <string name="presToChoose">press to choose</string>
+    <string name="time">Time</string>
+    <string name="date">Date</string>
+    <string name="confirm">Confirm</string>
+
 </resources>
