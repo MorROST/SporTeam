@@ -12,7 +12,7 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_weight="40"
+        android:layout_weight="30"
         android:layout_height="0dp">
 
     </LinearLayout>
@@ -24,7 +24,7 @@
         android:layout_weight="10">
 
         <TextView
-            android:text="@string/mail"
+            android:text="@string/userName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/userLab"
@@ -72,10 +72,34 @@
         android:layout_weight="10">
 
         <TextView
+            android:text="@string/mail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/email_lab_register"
+            android:layout_weight="2"
+            style="@style/Labs"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:id="@+id/email_txt_register"
+            android:layout_weight="1"
+            style="@style/fields"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10">
+
+        <TextView
             android:text="@string/phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/idLab"
+            android:id="@+id/phone_lab_register"
             android:layout_weight="2"
             style="@style/Labs"/>
 
@@ -84,7 +108,31 @@
             android:layout_height="wrap_content"
             android:inputType="number"
             android:ems="10"
-            android:id="@+id/idField"
+            android:id="@+id/phone_txt_register"
+            android:layout_weight="1"
+            style="@style/fields"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10">
+
+        <TextView
+            android:text="@string/age"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/age_lab_register"
+            android:layout_weight="2"
+            style="@style/Labs"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/age_txt_register"
             android:layout_weight="1"
             style="@style/fields"/>
     </LinearLayout>
@@ -127,7 +175,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/regBut"
             android:layout_weight="1"
-            style="@style/buttons"/>
+            style="@style/buttons"
+            android:onClick="Register"/>
 
         <Button
             android:text="@string/back"
