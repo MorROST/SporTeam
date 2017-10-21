@@ -68,7 +68,7 @@ public class Register extends Activity {
         //if (check)
         //{
             User u = new User(userName.getText().toString(),password.getText().toString(),email.getText().toString(),gender, phone.getText().toString(),Integer.parseInt(age.getText().toString()));
-            Login.connectionUtil.Register(u);
+            StartPage.connectionUtil.Register(u);
         //}
     }
 

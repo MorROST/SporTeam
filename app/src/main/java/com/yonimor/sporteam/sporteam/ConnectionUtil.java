@@ -21,7 +21,8 @@ public class ConnectionUtil {
 
     public ConnectionUtil() throws IOException {
 
-        clientSocket  = new Socket("127.0.0.1", 54321);
+        //!!!!!!!!!!!!!!IP Must Change To NetBeans Machine IP AND NOT 127.0.0.1
+        clientSocket  = new Socket("10.0.0.6", 30545);
         input = clientSocket.getInputStream();
         output = clientSocket.getOutputStream();
         oos = new ObjectOutputStream(output);
@@ -50,7 +51,7 @@ public class ConnectionUtil {
     {
         ConnectionData requestCD = new ConnectionData();
         ConnectionData responseCD = new ConnectionData();
-        requestCD.setRequestCode(ConnectionData.LOGIN);
+        requestCD.setRequestCode(ConnectionData.REGISTER);
         requestCD.setUser(us);
 
         try {
