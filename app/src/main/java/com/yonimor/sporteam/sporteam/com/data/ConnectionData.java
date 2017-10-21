@@ -7,12 +7,15 @@ import java.io.Serializable;
  */
 
 public class ConnectionData implements Serializable{
-    public static final int LOGIN = 1;
-    public static final int REGISTER = 2;
+    public static final int OK = 1;
+    public static final int NOT_OK = 2;
+    public static final int SOMTHING_WRONG = 3;
+    public static final int LOGIN = 4;
+    public static final int REGISTER = 5;
 
     private int requestCode;
     private String email, password;
-    private boolean worked;
+    private int worked;
     private User user;
 
     public User getUser() {
@@ -23,11 +26,11 @@ public class ConnectionData implements Serializable{
         this.user = user;
     }
 
-    public boolean isWorked() {
+    public int getWorked() {
         return worked;
     }
 
-    public void setWorked(boolean worked) {
+    public void setWorked(int worked) {
         this.worked = worked;
     }
 

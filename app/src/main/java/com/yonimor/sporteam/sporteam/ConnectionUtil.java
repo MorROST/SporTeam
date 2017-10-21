@@ -29,7 +29,7 @@ public class ConnectionUtil {
         ois = new ObjectInputStream(input);
     }
 
-    public boolean LogIn(String email, String password)
+    public int LogIn(String email, String password)
     {
         ConnectionData requestCD = new ConnectionData();
         ConnectionData responseCD = new ConnectionData();
@@ -44,10 +44,10 @@ public class ConnectionUtil {
             System.out.println("connection problems... faild to write objecton LogIn\n" + ex.getMessage());
         }
 
-        return  responseCD.isWorked();
+        return  responseCD.getWorked();
     }
 
-    public boolean Register(User us)
+    public int Register(User us)
     {
         ConnectionData requestCD = new ConnectionData();
         ConnectionData responseCD = new ConnectionData();
@@ -61,6 +61,6 @@ public class ConnectionUtil {
             System.out.println("connection problems... faild to write objecton Register\n" + ex.getMessage());
         }
 
-        return  responseCD.isWorked();
+        return  responseCD.getWorked();
     }
 }

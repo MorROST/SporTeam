@@ -12,6 +12,8 @@ import android.widget.Toast;
 import com.yonimor.sporteam.sporteam.com.data.*;
 
 public class Register extends Activity {
+
+
     EditText userName, password, phone, email, age;
     RadioGroup group;
     String gender;
@@ -19,6 +21,7 @@ public class Register extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
 
         userName = (EditText) findViewById(R.id.userField);
         password = (EditText) findViewById(R.id.passField);
@@ -62,13 +65,27 @@ public class Register extends Activity {
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!NOT USING VALIDATION FOR NOW!!
     public void Register(View view) {
         //boolean check = ValidCheck();
+        int checkIfWorked = ConnectionData.SOMTHING_WRONG;
         int selectedID = group.getCheckedRadioButtonId();
         RadioButton selectedRB = (RadioButton) findViewById(selectedID);
         gender = selectedRB.getText().toString();
         //if (check)
         //{
             User u = new User(userName.getText().toString(),password.getText().toString(),email.getText().toString(),gender, phone.getText().toString(),Integer.parseInt(age.getText().toString()));
-            StartPage.connectionUtil.Register(u);
+        checkIfWorked = StartPage.connectionUtil.Register(u);
+        if(checkIfWorked==ConnectionData.OK)
+        {
+            Toast.makeText(this, userName.getText().toString() + " was added" , Toast.LENGTH_LONG).show();
+            finish();
+        }
+        else if(checkIfWorked==ConnectionData.NOT_OK)
+        {
+            Toast.makeText(this, "This email is already registered" , Toast.LENGTH_LONG).show();
+        }
+        else if(checkIfWorked==ConnectionData.SOMTHING_WRONG)
+        {
+            Toast.makeText(this, "There was a problem" , Toast.LENGTH_LONG).show();
+        }
         //}
     }
 
