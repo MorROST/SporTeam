@@ -32,6 +32,7 @@ public class StartPage extends Activity {
                     try {
                         connectionUtil = new ConnectionUtil();
                     } catch (IOException e) {
+                        Toast.makeText(null, "NOT connected", Toast.LENGTH_LONG).show();
                         e.printStackTrace();
                     }
                 }

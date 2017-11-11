@@ -22,7 +22,7 @@ public class ConnectionUtil {
     public ConnectionUtil() throws IOException {
 
         //!!!!!!!!!!!!!!IP Must Change To NetBeans Machine IP AND NOT 127.0.0.1
-        clientSocket  = new Socket("10.0.0.6", 30545);
+        clientSocket  = new Socket("192.168.0.107", 30545);
         input = clientSocket.getInputStream();
         output = clientSocket.getOutputStream();
         oos = new ObjectOutputStream(output);
