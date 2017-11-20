@@ -24,26 +24,18 @@ public class StartPage extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_page);
+        new AsyncClass().execute();
+    }
 
-        if (hasPermissions()){
-            // our app has permissions.
-            new Thread(new Runnable(){
-                public void run(){
-                    try {
-                        connectionUtil = new ConnectionUtil();
-                    } catch (IOException e) {
-                        Toast.makeText(null, "NOT connected", Toast.LENGTH_LONG).show();
-                        e.printStackTrace();
-                    }
-                }
-            }).start();
-            if (connectionUtil != null)
-                Toast.makeText(this, "connected", Toast.LENGTH_LONG).show();
+    class AsyncClass extends AsyncTask<Void,Void,Void>
+    {
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            Connectig();
+            return null;
         }
-        else {
-            //our app doesn't have permissions, So i m requesting permissions.
-            requestPerms();
-        }
+
     }
 
     private boolean hasPermissions(){
@@ -108,11 +100,39 @@ public class StartPage extends Activity {
 
     }
 
+    public void Connectig()
+    {
+        if (hasPermissions()){
+            // our app has permissions.
+            new Thread(new Runnable(){
+                public void run(){
+                    try {
+                        connectionUtil = new ConnectionUtil();;
+                    } catch (IOException e) {
+                        Toast.makeText(null, "NOT connected", Toast.LENGTH_LONG).show();
+                        e.printStackTrace();
+                    }
+                    if(connectionUtil==null)
+                    {
+                        Toast.makeText(null, "NOT connected", Toast.LENGTH_LONG).show();
+                    }
+                }
+            }).start();
+            if (connectionUtil != null)
+                Toast.makeText(this, "connected", Toast.LENGTH_LONG).show();
+        }
+        else {
+            //our app doesn't have permissions, So i m requesting permissions.
+            requestPerms();
+        }
+    }
+
 
 
 
     public void login(View view) {
-        Toast.makeText(this, "Problem with server please try later", Toast.LENGTH_LONG).show();
+        Intent in = new Intent(this, Home.class);
+        startActivity(in);
 
     }
 

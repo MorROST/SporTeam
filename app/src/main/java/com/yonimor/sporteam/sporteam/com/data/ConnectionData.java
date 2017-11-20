@@ -1,6 +1,8 @@
 package com.yonimor.sporteam.sporteam.com.data;
 
+
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Created by TheYoni on 20/10/2017.
@@ -13,12 +15,32 @@ public class ConnectionData implements Serializable{
     public static final int LOGIN = 4;
     public static final int REGISTER = 5;
     public static final int INSERTGAME = 6;
+    public static final int ALLGAMES = 7;
+    public static final int UPDATEGAMES = 8;
 
     private int requestCode;
     private String email, password;
     private int worked;
     private User user;
     private Game game;
+    private ArrayList arrayList;
+    private int lastGameAtClient;
+
+    public int getLastGameAtClient() {
+        return lastGameAtClient;
+    }
+
+    public void setLastGameAtClient(int lastGameAtClient) {
+        this.lastGameAtClient = lastGameAtClient;
+    }
+
+    public ArrayList getArrayList() {
+        return arrayList;
+    }
+
+    public void setArrayList(ArrayList arrayList) {
+        this.arrayList = arrayList;
+    }
 
     public Game getGame() {
         return game;
