@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 import com.yonimor.sporteam.sporteam.com.data.*;
 
@@ -24,19 +25,10 @@ public class StartPage extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_page);
-        new AsyncClass().execute();
+        Connecting();
     }
 
-    class AsyncClass extends AsyncTask<Void,Void,Void>
-    {
 
-        @Override
-        protected Void doInBackground(Void... params) {
-            Connectig();
-            return null;
-        }
-
-    }
 
     private boolean hasPermissions(){
         int res = 0;
@@ -100,7 +92,7 @@ public class StartPage extends Activity {
 
     }
 
-    public void Connectig()
+    public void Connecting()
     {
         if (hasPermissions()){
             // our app has permissions.
@@ -131,8 +123,24 @@ public class StartPage extends Activity {
 
 
     public void login(View view) {
-        Intent in = new Intent(this, Home.class);
-        startActivity(in);
+        EditText email,password;
+        email = (EditText) findViewById(R.id.email_txt_login);
+        password = (EditText) findViewById(R.id.password_txt_login);
+
+        int checkIfWorked;
+        checkIfWorked = StartPage.connectionUtil.LogIn(email.getText().toString(),password.getText().toString());
+        if(checkIfWorked==ConnectionData.OK) {
+            Intent in = new Intent(this, Home.class);
+            startActivity(in);
+        }
+        else if(checkIfWorked==ConnectionData.NOT_OK)
+        {
+            Toast.makeText(this, "Email or password are incorrect", Toast.LENGTH_LONG).show();
+        }
+        else
+        {
+            Toast.makeText(this, "Somthing is wrong contact the help center", Toast.LENGTH_LONG).show();
+        }
 
     }
 

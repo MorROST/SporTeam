@@ -28,8 +28,8 @@ public class ConnectionUtil {
     public ConnectionUtil() throws IOException {
 
         //!!!!!!!!!!!!!!IP Must Change To NetBeans Machine IP AND NOT 127.0.0.1
-        clientSocket  = new Socket("192.168.0.103", 30545); //mor
-        //clientSocket  = new Socket("10.0.0.6", 30545);//yoni
+        //clientSocket  = new Socket("192.168.0.103", 30545); //mor
+        clientSocket  = new Socket("10.0.0.6", 30545);//yoni
         output = clientSocket.getOutputStream();
         input = clientSocket.getInputStream();
         oos = new ObjectOutputStream(output);
@@ -39,19 +39,42 @@ public class ConnectionUtil {
     public int LogIn(String email, String password)
     {
         ConnectionData requestCD = new ConnectionData();
-        ConnectionData responseCD = new ConnectionData();
         requestCD.setRequestCode(ConnectionData.LOGIN);
         requestCD.setEmail(email);
         requestCD.setPassword(password);
 
+        AsyncClassInt i = new AsyncClassInt(requestCD);
         try {
-            oos.writeObject(requestCD);
-            responseCD = (ConnectionData)ois.readObject();
-        } catch (Exception ex) {
-            System.out.println("connection problems... faild to write objecton LogIn\n" + ex.getMessage());
+            Integer a = i.execute().get();
+            return a;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
         }
+        return 3;
+    }
 
-        return  responseCD.getWorked();
+
+
+
+
+    public ArrayList GetAllGames()
+    {
+        ConnectionData requestCD = new ConnectionData();
+        requestCD.setRequestCode(ConnectionData.ALLGAMES);
+
+        AsyncClassArrayList i = new AsyncClassArrayList(requestCD);
+        try {
+            ArrayList a = i.execute().get();
+            return a;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return null;
+
     }
 
     public int Register(User us)
@@ -76,8 +99,11 @@ public class ConnectionUtil {
 
 
         return  responseCD.getWorked();*/
-        //AsyncClass i = new AsyncClass(us).execute();
-        AsyncClass i = new AsyncClass(us);
+
+        ConnectionData requestCD = new ConnectionData();
+        requestCD.setRequestCode(ConnectionData.REGISTER);
+        requestCD.setUser(us);
+        AsyncClassInt i = new AsyncClassInt(requestCD);
         try {
             Integer a = i.execute().get();
             return a;
@@ -89,22 +115,18 @@ public class ConnectionUtil {
         return 3;
     }
 
-    class AsyncClass extends AsyncTask<Void,Void,Integer>
+///////////////////////AsyncClasses////////////////////////
+    class AsyncClassInt extends AsyncTask<Void,Void,Integer>
     {
-        User u;
-        ConnectionData requestCD = new ConnectionData();
+        ConnectionData requestCD;
         ConnectionData responseCD = new ConnectionData();
-        AsyncClass(User u)
+        AsyncClassInt(ConnectionData requestCD)
         {
-            this.u = u;
+            this.requestCD = requestCD;
         }
 
         @Override
         protected Integer doInBackground(Void... params) {
-
-            requestCD.setRequestCode(ConnectionData.REGISTER);
-            requestCD.setUser(u);
-
 
             try {
                 oos.writeObject(requestCD);
@@ -126,20 +148,38 @@ public class ConnectionUtil {
         }
     }
 
-    public ArrayList GetAllGames()
+    class AsyncClassArrayList extends AsyncTask<Void,Void,ArrayList>
     {
-        ConnectionData requestCD = new ConnectionData();
+        ConnectionData requestCD;
         ConnectionData responseCD = new ConnectionData();
-        requestCD.setRequestCode(ConnectionData.ALLGAMES);
-
-        try {
-            oos.writeObject(requestCD);
-            responseCD = (ConnectionData)ois.readObject();
-        } catch (Exception ex) {
-            System.out.println("connection problems... faild to write objecton Register\n" + ex.getMessage());
+        AsyncClassArrayList(ConnectionData requestCD)
+        {
+            this.requestCD = requestCD;
         }
-        return responseCD.getArrayList();
+
+        @Override
+        protected ArrayList doInBackground(Void... params) {
+
+            try {
+                oos.writeObject(requestCD);
+                responseCD = (ConnectionData)ois.readObject();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+            return responseCD.getArrayList();
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList arrayList) {
+            super.onPostExecute(arrayList);
+        }
     }
+
 
 
 
