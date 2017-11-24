@@ -1,17 +1,17 @@
 package com.yonimor.sporteam.sporteam;
 
-        import android.os.AsyncTask;
+import android.os.AsyncTask;
 
-        import java.io.IOException;
-        import java.io.InputStream;
-        import java.io.ObjectInputStream;
-        import java.io.ObjectOutputStream;
-        import java.io.OutputStream;
-        import java.net.Socket;
-        import java.util.ArrayList;
-        import java.util.concurrent.ExecutionException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.net.Socket;
+import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
-        import com.yonimor.sporteam.sporteam.com.data.*;
+import com.yonimor.sporteam.sporteam.com.data.*;
 
 
 /**
