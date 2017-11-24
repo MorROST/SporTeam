@@ -28,8 +28,8 @@ public class ConnectionUtil {
     public ConnectionUtil() throws IOException {
 
         //!!!!!!!!!!!!!!IP Must Change To NetBeans Machine IP AND NOT 127.0.0.1
-        //clientSocket  = new Socket("192.168.0.103", 30545); //mor
-        clientSocket  = new Socket("10.0.0.6", 30545);//yoni
+        clientSocket  = new Socket("192.168.0.106", 30545); //mor
+        //clientSocket  = new Socket("10.0.0.6", 30545);//yoni
         output = clientSocket.getOutputStream();
         input = clientSocket.getInputStream();
         oos = new ObjectOutputStream(output);
