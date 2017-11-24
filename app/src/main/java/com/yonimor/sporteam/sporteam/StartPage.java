@@ -3,13 +3,17 @@ package com.yonimor.sporteam.sporteam;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.Toast;
 import com.yonimor.sporteam.sporteam.com.data.*;
 
@@ -19,30 +23,34 @@ public class StartPage extends Activity {
 
     static ConnectionUtil connectionUtil = null;
     private static final int PERMS_REQUEST_CODE = 123;
+    String email;
+    CheckBox keepLoged;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_page);
-        new AsyncClass().execute();
-    }
-
-    class AsyncClass extends AsyncTask<Void,Void,Void>
-    {
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            Connectig();
-            return null;
+        if(connectionUtil == null) {
+            Connecting();
         }
 
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        this.email = preferences.getString("email", "");
+
+        if (!email.equals("") && !email.equals("null")) {
+            finish();
+            Intent intent = new Intent(this, Home.class);
+            startActivity(intent);
+        }
     }
+
+
 
     private boolean hasPermissions(){
         int res = 0;
         //string array of permissions,
         String[] permissions = new String[]{Manifest.permission.INTERNET, Manifest.permission.ACCESS_NETWORK_STATE
-        ,Manifest.permission.ACCESS_WIFI_STATE, Manifest.permission.CHANGE_WIFI_STATE};
+                ,Manifest.permission.ACCESS_WIFI_STATE, Manifest.permission.CHANGE_WIFI_STATE};
 
         for (String perms : permissions){
             res = checkCallingOrSelfPermission(perms);
@@ -100,7 +108,7 @@ public class StartPage extends Activity {
 
     }
 
-    public void Connectig()
+    public void Connecting()
     {
         if (hasPermissions()){
             // our app has permissions.
@@ -131,8 +139,34 @@ public class StartPage extends Activity {
 
 
     public void login(View view) {
-        Intent in = new Intent(this, Home.class);
-        startActivity(in);
+        EditText email,password;
+        email = (EditText) findViewById(R.id.email_txt_login);
+        password = (EditText) findViewById(R.id.password_txt_login);
+
+        int checkIfWorked;
+        checkIfWorked = StartPage.connectionUtil.LogIn(email.getText().toString(),password.getText().toString());
+        if(checkIfWorked==ConnectionData.OK) {
+            Intent in = new Intent(this, Home.class);
+            startActivity(in);
+            keepLoged = (CheckBox) findViewById(R.id.stayLogedIn_txt_login);
+            if (keepLoged.isChecked()) {
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+                SharedPreferences.Editor editor = preferences.edit();
+
+
+                editor.putString("email", this.email);
+                editor.commit();
+                finish();
+            }
+        }
+        else if(checkIfWorked==ConnectionData.NOT_OK)
+        {
+            Toast.makeText(this, "Email or password are incorrect", Toast.LENGTH_LONG).show();
+        }
+        else
+        {
+            Toast.makeText(this, "Somthing is wrong contact the help center", Toast.LENGTH_LONG).show();
+        }
 
     }
 

@@ -73,5 +73,13 @@
             android:layout_weight="1"
             android:text="numbe + / + total number"
             style="@style/Labs"/>
+
+        <TextView
+            android:id="@+id/sportType_txt_gameListView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="type"
+            style="@style/Labs"/>
     </LinearLayout>
 </LinearLayout>

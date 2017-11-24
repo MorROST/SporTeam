@@ -1,16 +1,16 @@
 package com.yonimor.sporteam.sporteam;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Color;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.TextView;
-import android.widget.Toast;
-import com.yonimor.sporteam.sporteam.com.data.*;
+        import android.app.Activity;
+        import android.content.Intent;
+        import android.graphics.Color;
+        import android.os.Bundle;
+        import android.view.View;
+        import android.widget.EditText;
+        import android.widget.RadioButton;
+        import android.widget.RadioGroup;
+        import android.widget.TextView;
+        import android.widget.Toast;
+        import com.yonimor.sporteam.sporteam.com.data.*;
 
 public class Register extends Activity {
 
@@ -66,9 +66,9 @@ public class Register extends Activity {
             email_bool = true;
         } else {
             textView.setText("Invalid email address");
-        email_editxt.setBackgroundColor(Color.RED);
-        email_bool = false;
-    }
+            email_editxt.setBackgroundColor(Color.RED);
+            email_bool = false;
+        }
 
         //////////////////////////////////PASSWORD & REPEAT////////////////////////////////////////
         if (passwordRepeat.equals("") || password.equals("")) {
@@ -104,9 +104,9 @@ public class Register extends Activity {
 
         if (name.equals("")) {
 
-                name_bool = false;
-                name_editxt.setBackgroundColor(Color.RED);
-                textView.setText("Please tell us your name....");
+            name_bool = false;
+            name_editxt.setBackgroundColor(Color.RED);
+            textView.setText("Please tell us your name....");
 
         }
         else if (!name.equals(""))
@@ -188,9 +188,9 @@ public class Register extends Activity {
         if (validations())
         {
 
-                User u = new User (name, password ,email ,gender , phone,Integer.parseInt(age_editxt.getText().toString()));
-                checkIfWorked = StartPage.connectionUtil.Register(u);
-             if(checkIfWorked==ConnectionData.OK)
+            User u = new User (name, password ,email ,gender , phone,Integer.parseInt(age_editxt.getText().toString()));
+            checkIfWorked = StartPage.connectionUtil.Register(u);
+            if(checkIfWorked==ConnectionData.OK)
             {
                 Toast.makeText(this, name + " was added" , Toast.LENGTH_LONG).show();
                 finish();
@@ -206,7 +206,7 @@ public class Register extends Activity {
 
         }
 
-}
+    }
 
     public void back(View view) {
         finish();
