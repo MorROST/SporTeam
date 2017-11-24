@@ -12,8 +12,26 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_weight="20"
+        android:layout_weight="10"
         android:layout_height="0dp">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10">
+
+        <TextView
+            android:text="Error Label"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/error_label"
+            android:layout_weight="2"
+            android:textColor="@android:color/holo_red_light"
+            style="@style/Labs"/>
 
     </LinearLayout>
 
@@ -106,7 +124,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
+            android:inputType="textEmailAddress"
             android:ems="10"
             android:id="@+id/email_txt_register"
             android:layout_weight="1"
