@@ -28,6 +28,13 @@
 
     <string name="category_label">Pick a category</string>
     <string name="CitiesName">Pick a City location</string>
+    ////////////REGISTER//////////////
+
+
+
+
+
+
 
     ////////////Array Game Category List//////////////
     <string-array name="gameCategory_name_list">

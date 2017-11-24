@@ -19,11 +19,14 @@ public class Register extends Activity {
     RadioGroup group;
     String email, password,passwordRepeat, name, gender;
     String age, phone;
+    TextView textView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        textView = (TextView) findViewById(R.id.error_label);
+        textView.setText("");
 
         name_editxt = (EditText) findViewById(R.id.name_editxt);
         password_editxt = (EditText) findViewById(R.id.passField);
@@ -45,7 +48,6 @@ public class Register extends Activity {
         ////////////////////////////////EMAIL ADDRESS///////////////////////////////////
         final EditText emailValidate = (EditText) findViewById(R.id.email_txt_register);
 
-        final TextView textView = (TextView) findViewById(R.id.error_label);
 
         String email = emailValidate.getText().toString().trim();
 
@@ -60,38 +62,67 @@ public class Register extends Activity {
 
         if (email.matches(emailPattern)) {
             textView.setText("");
+            email_editxt.setBackgroundColor(Color.TRANSPARENT);
             email_bool = true;
         } else {
             textView.setText("Invalid email address");
-            email_editxt.setBackgroundColor(Color.RED);
-            email_bool = false;
-        }
+        email_editxt.setBackgroundColor(Color.RED);
+        email_bool = false;
+    }
 
         //////////////////////////////////PASSWORD & REPEAT////////////////////////////////////////
         if (passwordRepeat.equals("") || password.equals("")) {
-            password_bool = false;
-            passwordRepeat_bool = false;
-            password_editxt.setBackgroundColor(Color.RED);
-            repeatPassword_editxt.setBackgroundColor(Color.RED);
-        } else if (!passwordRepeat.equals("") || !password.equals("")) {
-            password_bool = true;
-            passwordRepeat_bool = true;
-            password_editxt.setBackgroundColor(Color.TRANSPARENT);
-            repeatPassword_editxt.setBackgroundColor(Color.TRANSPARENT);
+            if(password.equals("")) {
+                password_bool = false;
+                password_editxt.setBackgroundColor(Color.RED);
+                textView.setText("Password cannot be empty");
+            }
+            else {
+                passwordRepeat_bool = false;
+                repeatPassword_editxt.setBackgroundColor(Color.RED);
+                textView.setText("Password cannot be empty");
+            }
+
+
+        } else if (!passwordRepeat.equals("") && !password.equals("")) {
+
+            if(passwordRepeat.equals(password)) {
+                password_editxt.setBackgroundColor(Color.TRANSPARENT);
+                repeatPassword_editxt.setBackgroundColor(Color.TRANSPARENT);
+                password_bool = true;
+                passwordRepeat_bool = true;
+            }
+            else
+            {
+                password_editxt.setBackgroundColor(Color.RED);
+                repeatPassword_editxt.setBackgroundColor(Color.RED);
+                textView.setText("password doesn't match");
+            }
 
         }
         //////////////////////////////////FIRST NAME  //////////////////////////////////
 
         if (name.equals("")) {
+
                 name_bool = false;
                 name_editxt.setBackgroundColor(Color.RED);
+                textView.setText("Please tell us your name....");
 
         }
         else if (!name.equals(""))
         {
+            String namePattern = "[a-zA-Z]+\\.?";
 
-                name_editxt.setBackgroundColor(Color.TRANSPARENT);
+            if (name.matches(namePattern)) {
+                textView.setText("");
                 name_bool = true;
+                name_editxt.setBackgroundColor(Color.TRANSPARENT);
+            } else {
+                textView.setText("Name can only contains letters");
+                name_editxt.setBackgroundColor(Color.RED);
+                name_bool = false;
+            }
+
 
         }
         //////////////////////////////////  AGE  &  PHONE  ////////////////////////////////////////
@@ -99,11 +130,13 @@ public class Register extends Activity {
             if (phone.equals("")) {
                 phone_editxt.setBackgroundColor(Color.RED);
                 phone_bool = false;
+                textView.setText("Phone filed cannot be empty....");
 
                 if(age.equals(""))
                 {
                     age_editxt.setBackgroundColor(Color.RED);
                     age_bool = false;
+                    textView.setText("Age filed cannot be empty....");
                 }
             }
             else {
