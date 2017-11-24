@@ -2,9 +2,10 @@
     <string name="app_name">SporTeam</string>
 
     <string name="mail">Email</string>
-    <string name="userName">User name</string>
+    <string name="name">Your Name</string>
     <string name="age">Age</string>
     <string name="password">Password</string>
+    <string name="passwordRepeat">Repeat your password</string>
     <string name="phone">Phone</string>
     <string name="genderMale">Male</string>
     <string name="genderFemale">Female</string>
@@ -13,7 +14,7 @@
     <string name="login">Login</string>
     <string name="filterHeadLine">Filter</string>
     <string name="myGames">my games</string>
-    <string name="soccker">Soccker</string>
+    <string name="soccer">Soccer</string>
     <string name="basketball">Basketball</string>
     <string name="tennis">Tennis</string>
     <string name="city">City</string>
@@ -22,4 +23,41 @@
     <string name="date">Date</string>
     <string name="confirm">Confirm</string>
 
+
+    /////////////////////////////////////////Host new game activity/////////////////////////////////////////////
+
+    <string name="category_label">Pick a category</string>
+    <string name="CitiesName">Pick a City location</string>
+
+    ////////////Array Game Category List//////////////
+    <string-array name="gameCategory_name_list">
+        <item>Soccer</item>
+        <item>Basketball</item>
+        <item>Tennis</item>
+        <item>Running Group</item>
+    </string-array>
+
+    ////////////Array Cities List//////////////
+    <string-array name="city_name">
+        <item>Tel-Aviv</item>
+        <item>Petach Tiqwa</item>
+        <item>Beer Sheva</item>
+        <item>Hifa</item>
+        <item>Eilat</item>
+        <item>Newe Yamin</item>
+        <item>Kfar Saaba</item>
+        <item>Ramat Gan</item>
+        <item>Holon</item>
+        <item>Baat Yam</item>
+        <item>Hertzliya</item>
+        <item>Ramat HaSharon</item>
+        <item>Rhaanana</item>
+        <item>Hod HaSharon</item>
+        <item>Natanya</item>
+        <item>Hadera</item>
+        <item>Jerosalem</item>
+        <item>Rishon Le Tizyon</item>
+        <item>Ashdod</item>
+        <item>Ariel</item>
+    </string-array>
 </resources>
