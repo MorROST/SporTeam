@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="100"
+    tools:context="com.yonimor.sporteam.sporteam.HostCreateNewGame">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="20"
+        android:orientation="horizontal">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10"
+        android:weightSum="100"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_gravity="center">
+
+
+        <TextView
+            android:id="@+id/pickCategory_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="50"
+            android:background="@android:color/transparent"
+            android:text="@string/category_label"
+            android:textSize="20sp" />
+
+        <Spinner
+            android:id="@+id/gameCategory_Spinner"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="50"
+            android:background="@android:color/transparent"
+            android:entries="@array/gameCategory_name_list"
+            android:popupBackground="@color/colorPrimary"
+            android:textSize="20sp"
+            android:spinnerMode="dialog" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10"
+        android:weightSum="100"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_gravity="center">
+
+
+        <TextView
+            android:id="@+id/pickCity_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="50"
+            android:background="@android:color/transparent"
+            android:text="@string/CitiesName"
+            android:textSize="20sp" />
+
+        <Spinner
+            android:id="@+id/pickCity_Spinner"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="50"
+            android:background="@android:color/transparent"
+            android:entries="@array/city_name"
+            android:popupBackground="@color/colorPrimary"
+            android:textSize="20sp"
+            android:spinnerMode="dialog" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -45,7 +45,7 @@ public class Register extends Activity {
         ////////////////////////////////EMAIL ADDRESS///////////////////////////////////
         final EditText emailValidate = (EditText) findViewById(R.id.email_txt_register);
 
-        //final TextView textView = (TextView) findViewById(R.id.error_lable);                   should enable error label!  next version candidate
+        final TextView textView = (TextView) findViewById(R.id.error_label);
 
         String email = emailValidate.getText().toString().trim();
 
@@ -59,11 +59,10 @@ public class Register extends Activity {
 
 
         if (email.matches(emailPattern)) {
-           // textView.setText("");                                                               should enable error label!  next version candidate
-            email_editxt.setBackgroundColor(Color.TRANSPARENT);
+            textView.setText("");
             email_bool = true;
         } else {
-           // textView.setText("Invalid email address");                                          should enable error label!  next version candidate
+            textView.setText("Invalid email address");
             email_editxt.setBackgroundColor(Color.RED);
             email_bool = false;
         }
