@@ -12,7 +12,7 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_weight="30"
+        android:layout_weight="20"
         android:layout_height="0dp">
 
     </LinearLayout>
@@ -24,10 +24,10 @@
         android:layout_weight="10">
 
         <TextView
-            android:text="@string/userName"
+            android:text="@string/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/userLab"
+            android:id="@+id/name_label"
             android:layout_weight="2"
             style="@style/Labs"/>
 
@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="10"
-            android:id="@+id/userField"
+            android:id="@+id/name_editxt"
             android:layout_weight="1"
             style="@style/fields"/>
     </LinearLayout>
@@ -61,6 +61,30 @@
             android:inputType="textPassword"
             android:ems="10"
             android:id="@+id/passField"
+            android:layout_weight="1"
+            style="@style/fields"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10">
+
+        <TextView
+            android:text="@string/passwordRepeat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/repeatPass_label"
+            android:layout_weight="2"
+            style="@style/Labs"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:id="@+id/repeatPass_editxt"
             android:layout_weight="1"
             style="@style/fields"/>
     </LinearLayout>
