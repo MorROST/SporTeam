@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.preference.PreferenceManager;
@@ -42,6 +43,8 @@ public class StartPage extends Activity {
             Intent intent = new Intent(this, Home.class);
             startActivity(intent);
         }
+
+
     }
 
 
@@ -173,5 +176,13 @@ public class StartPage extends Activity {
     public void reg(View view) {
         Intent in = new Intent(this, Register.class);
         startActivity(in);
+    }
+
+    public void justForTestOpenGMaps(View view) {
+        Uri gmmIntentUri = Uri.parse("geo:0,0?q= G center kfar Saba");
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        mapIntent.setPackage("com.google.android.apps.maps");
+        startActivity(mapIntent);
+
     }
 }

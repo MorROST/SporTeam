@@ -63,4 +63,5 @@
         <item>Ashdod</item>
         <item>Ariel</item>
     </string-array>
+    <string name="title_activity_connect_to_google_map">Map</string>
 </resources>
