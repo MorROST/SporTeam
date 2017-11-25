@@ -21,12 +21,19 @@ public class Home extends Activity {
     ListView gameList;
     ArrayList allGames;
     GamesAdapter complexGameAdapter;
-    TextView hello;
+    TextView hello_txtview;
+    String name;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        this.name = preferences.getString("name", "");
+        hello_txtview = (TextView) findViewById(R.id.hello_txt_home);
+        hello_txtview.setText("Hello " + name + "!");
 
         gameList= (ListView) findViewById(R.id.games_listView_home);
 

@@ -146,23 +146,24 @@ public class StartPage extends Activity {
         email = (EditText) findViewById(R.id.email_txt_login);
         password = (EditText) findViewById(R.id.password_txt_login);
 
-        int checkIfWorked;
-        checkIfWorked = StartPage.connectionUtil.LogIn(email.getText().toString(),password.getText().toString());
-        if(checkIfWorked==ConnectionData.OK) {
+        String name;
+        name = StartPage.connectionUtil.LogIn(email.getText().toString(),password.getText().toString());
+        if(!name.equals("")) {
+
+            keepLoged = (CheckBox) findViewById(R.id.stayLogedIn_txt_login);
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+            SharedPreferences.Editor editor = preferences.edit();
+            if (keepLoged.isChecked()) {
+                 editor.putString("email", this.email);
+            }
+            Toast.makeText(this, "Hello " + name + "!", Toast.LENGTH_LONG).show();
+            editor.putString("name", name);
+            editor.commit();
             Intent in = new Intent(this, Home.class);
             startActivity(in);
-            keepLoged = (CheckBox) findViewById(R.id.stayLogedIn_txt_login);
-            if (keepLoged.isChecked()) {
-                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-                SharedPreferences.Editor editor = preferences.edit();
-
-
-                editor.putString("email", this.email);
-                editor.commit();
-                finish();
-            }
+            finish();
         }
-        else if(checkIfWorked==ConnectionData.NOT_OK)
+        else if(name.equals(""))
         {
             Toast.makeText(this, "Email or password are incorrect", Toast.LENGTH_LONG).show();
         }

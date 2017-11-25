@@ -1,11 +1,16 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.yonimor.sporteam.sporteam.com.data;
-
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * Created by TheYoni on 20/10/2017.
+ *
+ * @author TheYoni
  */
 
 public class ConnectionData implements Serializable{
@@ -18,6 +23,7 @@ public class ConnectionData implements Serializable{
     public static final int ALLGAMES = 7;
     public static final int UPDATEGAMES = 8;
 
+
     private int requestCode;
     private String email, password;
     private int worked;
@@ -25,6 +31,15 @@ public class ConnectionData implements Serializable{
     private Game game;
     private ArrayList arrayList;
     private int lastGameAtClient;
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public int getLastGameAtClient() {
         return lastGameAtClient;
