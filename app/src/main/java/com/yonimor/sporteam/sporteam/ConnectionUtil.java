@@ -28,8 +28,8 @@ public class ConnectionUtil {
     public ConnectionUtil() throws IOException {
 
         //!!!!!!!!!!!!!!IP Must Change To NetBeans Machine IP AND NOT 127.0.0.1
-        clientSocket  = new Socket("192.168.0.106", 30545); //mor
-        //clientSocket  = new Socket("10.0.0.6", 30545);//yoni
+        //clientSocket  = new Socket("192.168.0.106", 30545); //mor
+        clientSocket  = new Socket("10.0.0.32", 30545);//yoni
         output = clientSocket.getOutputStream();
         input = clientSocket.getInputStream();
         oos = new ObjectOutputStream(output);
@@ -79,26 +79,6 @@ public class ConnectionUtil {
 
     public int Register(User us)
     {
-        /*ConnectionData requestCD = new ConnectionData();
-        ConnectionData responseCD = new ConnectionData();
-        requestCD.setRequestCode(ConnectionData.REGISTER);
-        requestCD.setUser(us);
-
-
-        try {
-            oos.writeObject(requestCD);
-            responseCD = (ConnectionData)ois.readObject();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-
-
-        return  responseCD.getWorked();*/
 
         ConnectionData requestCD = new ConnectionData();
         requestCD.setRequestCode(ConnectionData.REGISTER);
@@ -115,7 +95,25 @@ public class ConnectionUtil {
         return 3;
     }
 
-    ///////////////////////AsyncClasses////////////////////////
+    public int InsertGame(Game g)
+    {
+
+        ConnectionData requestCD = new ConnectionData();
+        requestCD.setRequestCode(ConnectionData.INSERTGAME);
+        requestCD.setGame(g);
+        AsyncClassInt i = new AsyncClassInt(requestCD);
+        try {
+            Integer a = i.execute().get();
+            return a;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return 3;
+    }
+
+///////////////////////AsyncClasses////////////////////////
     class AsyncClassInt extends AsyncTask<Void,Void,Integer>
     {
         ConnectionData requestCD;

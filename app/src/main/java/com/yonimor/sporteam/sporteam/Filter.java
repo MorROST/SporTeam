@@ -11,4 +11,6 @@ public class Filter extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter);
     }
+
+
 }

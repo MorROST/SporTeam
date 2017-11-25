@@ -22,7 +22,8 @@
         </activity>
         <activity android:name=".Filter" />
         <activity android:name=".Register" />
-        <activity android:name=".Home"></activity>
+        <activity android:name=".Home" />
+        <activity android:name=".HostCreateNewGame"></activity>
     </application>
 
 </manifest>

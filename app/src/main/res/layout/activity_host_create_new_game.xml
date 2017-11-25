@@ -83,4 +83,146 @@
 
     </LinearLayout>
 
+    <!--        ////////////////yoni for testing//////////////                     -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10"
+        android:weightSum="100"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_gravity="center">
+
+
+        <TextView
+            android:id="@+id/address_label_hostGame"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="50"
+            android:background="@android:color/transparent"
+            android:text="hard coded city"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/address_editText_hostGame"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="50"
+            android:textSize="20sp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10"
+        android:weightSum="100"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_gravity="center">
+
+
+        <TextView
+            android:id="@+id/numberOfPlayers_label_hostGame"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="50"
+            android:background="@android:color/transparent"
+            android:text="hard coded number of players cast2int"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/numberOfPlayers_editText_hostGame"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="50"
+            android:textSize="20sp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10"
+        android:weightSum="100"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_gravity="center">
+
+
+        <TextView
+            android:id="@+id/time_label_hostGame"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="50"
+            android:background="@android:color/transparent"
+            android:text="hard coded time"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/time_editText_hostGame"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="50"
+            android:textSize="20sp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10"
+        android:weightSum="100"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_gravity="center">
+
+
+    <TextView
+        android:id="@+id/date_label_hostGame"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="50"
+        android:background="@android:color/transparent"
+        android:text="hard coded date"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/date_editText_hostGame"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_weight="50"
+        android:textSize="20sp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/submit_btn_hostGame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="hard coded submit"
+            android:onClick="Submit"/>
+
+        <Button
+            android:id="@+id/back_btn_hostGame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="hard coded back"
+            android:onClick="Back"/>
+    </LinearLayout>
+
+
 </LinearLayout>

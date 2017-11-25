@@ -54,14 +54,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="host game" />
+            android:text="host game"
+            android:onClick="HostGame"/>
 
         <Button
             android:id="@+id/filter_btn_home"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="filter"/>
+            android:text="filter"
+            android:onClick="Filter"/>
 
 
     </LinearLayout>
