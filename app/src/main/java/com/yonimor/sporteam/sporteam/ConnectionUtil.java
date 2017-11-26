@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
@@ -25,11 +26,13 @@ public class ConnectionUtil {
     ObjectOutputStream oos;
     ObjectInputStream ois;
 
-    public ConnectionUtil() throws IOException {
+    public ConnectionUtil() throws Exception {
 
         //!!!!!!!!!!!!!!IP Must Change To NetBeans Machine IP AND NOT 127.0.0.1
-        clientSocket  = new Socket("192.168.0.109", 30545); //mor
+        clientSocket = new Socket();
+        //clientSocket  = new Socket("192.168.0.109", 30545); //mor
         //clientSocket = new Socket("10.0.0.32", 30545);//yoni
+        clientSocket.connect(new InetSocketAddress("10.0.0.32", 30545),5000);
         output = clientSocket.getOutputStream();
         input = clientSocket.getInputStream();
         oos = new ObjectOutputStream(output);

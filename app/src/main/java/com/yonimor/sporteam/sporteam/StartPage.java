@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.yonimor.sporteam.sporteam.com.data.*;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 
 public class StartPage extends Activity {
 
@@ -26,14 +27,28 @@ public class StartPage extends Activity {
     private static final int PERMS_REQUEST_CODE = 123;
     String email;
     CheckBox keepLoged;
+    int result;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_page);
         if(connectionUtil == null) {
-            Connecting();
+            result = Connecting();
+            if (result == ConnectionData.OK)
+            {
+                Toast.makeText(this, "Connected", Toast.LENGTH_LONG).show();
+            }
+            else if(result == ConnectionData.NOT_OK)
+            {
+                Toast.makeText(this, "NOT Connected", Toast.LENGTH_LONG).show();
+            }
+            else
+            {
+                Toast.makeText(this, "Somthing Wrong", Toast.LENGTH_LONG).show();
+            }
         }
+
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         this.email = preferences.getString("email", "");
@@ -47,6 +62,42 @@ public class StartPage extends Activity {
 
     }
 
+
+    public int Connecting()
+    {
+        Integer a = ConnectionData.SOMTHING_WRONG;
+        if (hasPermissions()){
+            // our app has permissions.
+            /*new Thread(new Runnable(){
+                public void run(){
+                    try {
+                        connectionUtil = new ConnectionUtil();
+                    } catch (IOException e) {
+                        Toast.makeText(null, "NOT connected", Toast.LENGTH_LONG).show();
+                        e.printStackTrace();
+                    }
+                    if(connectionUtil==null)
+                    {
+                        Toast.makeText(null, "NOT connected", Toast.LENGTH_LONG).show();
+                    }
+                }
+            }).start();*/
+            AsyncClassConnect i = new AsyncClassConnect();
+            try {
+                a = i.execute().get();
+                return a;
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            //our app doesn't have permissions, So i m requesting permissions.
+            requestPerms();
+        }
+        return a;
+    }
 
 
     private boolean hasPermissions(){
@@ -93,52 +144,44 @@ public class StartPage extends Activity {
 
         if (allowed){
             //user granted all permissions we can perform our task.
+            AsyncClassConnect i = new AsyncClassConnect();
             try {
-                connectionUtil = new ConnectionUtil();
-            } catch (IOException e) {
+              i.execute().get();
+            } catch (InterruptedException e) {
                 e.printStackTrace();
-                Toast.makeText(this, "Problem with server please try later", Toast.LENGTH_LONG).show();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
             }
         }
         else {
             // we will give warning to user that they haven't granted permissions.
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (shouldShowRequestPermissionRationale(Manifest.permission.INTERNET)){
-                    Toast.makeText(this, "Internet Permissions denied.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Permissions denied.", Toast.LENGTH_SHORT).show();
                 }
             }
         }
 
     }
 
-    public void Connecting()
-    {
-        if (hasPermissions()){
-            // our app has permissions.
-            new Thread(new Runnable(){
-                public void run(){
-                    try {
-                        connectionUtil = new ConnectionUtil();;
-                    } catch (IOException e) {
-                        Toast.makeText(null, "NOT connected", Toast.LENGTH_LONG).show();
-                        e.printStackTrace();
-                    }
-                    if(connectionUtil==null)
-                    {
-                        Toast.makeText(null, "NOT connected", Toast.LENGTH_LONG).show();
-                    }
-                }
-            }).start();
-            if (connectionUtil != null)
-                Toast.makeText(this, "connected", Toast.LENGTH_LONG).show();
-        }
-        else {
-            //our app doesn't have permissions, So i m requesting permissions.
-            requestPerms();
+
+
+    class AsyncClassConnect extends AsyncTask<Void, Void, Integer>{
+
+        @Override
+        protected Integer doInBackground(Void... params) {
+            try {
+                connectionUtil = new ConnectionUtil();
+                return ConnectionData.OK;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+            return ConnectionData.NOT_OK;
         }
     }
-
-
 
 
     public void login(View view) {
