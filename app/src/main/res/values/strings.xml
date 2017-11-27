@@ -64,4 +64,20 @@
         <item>Ariel</item>
     </string-array>
     <string name="title_activity_connect_to_google_map">Map</string>
+
+    ////////////////////////////////Home Menu///////////////////////////////////
+    <string name="setting_item">"Setting"</string>
+    <string name="logout_item">"Log Out"</string>
+    <string name="take_pic_item">"Take your picture"</string>
+    <string name="call_support_item">"Call support"</string>
+
+
+
+
+
+
+
+
+
+
 </resources>

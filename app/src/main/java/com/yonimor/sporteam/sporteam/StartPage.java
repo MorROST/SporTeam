@@ -83,9 +83,9 @@ public class StartPage extends Activity {
                 }
             }).start();*/
             AsyncClassConnect i = new AsyncClassConnect();
-            try {
-                a = i.execute().get();
-                return a;
+                try {
+                    a = i.execute().get();
+                    return a;
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } catch (ExecutionException e) {
@@ -173,6 +173,9 @@ public class StartPage extends Activity {
             try {
                 connectionUtil = new ConnectionUtil();
                 return ConnectionData.OK;
+
+
+
             } catch (IOException e) {
                 e.printStackTrace();
             }

@@ -19,8 +19,9 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen">
-        <activity android:name=".StartPage">
+        >
+        <activity android:name=".StartPage"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen">
             <meta-data
                 android:name="com.google.android.geo.API_KEY"
                 android:value="AIzaSyBeOVJ6f7iUe-kitbM65CGadKQ1eVhgP8Y" />
@@ -32,8 +33,11 @@
 
         </activity>
         <activity android:name=".Filter" />
-        <activity android:name=".Register" />
-        <activity android:name=".Home" />
+        <activity android:name=".Register"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen"/>
+        <activity android:name=".Home"
+            android:theme="@style/AppTheme"
+            android:label="Yoni and Mor"/>
         <activity android:name=".HostCreateNewGame" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
