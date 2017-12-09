@@ -9,43 +9,44 @@
     android:weightSum="100">
 
 
-    <LinearLayout
+    <ImageView
+        android:id="@+id/userImage_imageView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="10"
-        android:orientation="horizontal">
-
-    </LinearLayout>
+        android:layout_weight="20"
+        app:srcCompat="@mipmap/ic_launcher"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <ListView
         android:id="@+id/games_listView_home"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="80" />
+        android:layout_weight="70" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:orientation="horizontal"
-        android:layout_weight="10">
+        android:layout_weight="10"
+        android:weightSum="100"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/host_btn_home"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="host game"
-            android:onClick="HostGame"/>
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="50"
+            android:onClick="HostGame"
+            android:text="host game" />
 
         <Button
             android:id="@+id/filter_btn_home"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="filter"
-            android:onClick="Filter"/>
-
-
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="50"
+            android:onClick="Filter"
+            android:text="filter" />
     </LinearLayout>
 
 </LinearLayout>

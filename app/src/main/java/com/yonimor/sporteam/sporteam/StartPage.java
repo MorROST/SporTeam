@@ -200,7 +200,7 @@ public class StartPage extends Activity {
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
             SharedPreferences.Editor editor = preferences.edit();
             if (keepLoged.isChecked()) {
-                 editor.putString("email", this.email);
+                 editor.putString("email", email.getText().toString());
             }
             Toast.makeText(this, "Hello " + name + "!", Toast.LENGTH_LONG).show();
             editor.putString("name", name);

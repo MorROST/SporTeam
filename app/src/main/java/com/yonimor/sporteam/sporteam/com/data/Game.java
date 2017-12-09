@@ -9,6 +9,7 @@ import java.io.Serializable;
 public class Game implements Serializable {
     String createdBy, sportType,city,time,date,loaction;
     int numberOfPlayers;
+    int gameNumber;
 
     public Game(String createdBy, String sportType, String city, String time, String date, String loaction, int numberOfPlayers)
     {
@@ -19,6 +20,14 @@ public class Game implements Serializable {
         this.date = date;
         this.loaction = loaction;
         this.numberOfPlayers = numberOfPlayers;
+    }
+
+    public int getGameNumber() {
+        return gameNumber;
+    }
+
+    public void setGameNumber(int gameNumber) {
+        this.gameNumber = gameNumber;
     }
 
     public String getCreatedBy() {

@@ -70,6 +70,7 @@
     <string name="logout_item">"Log Out"</string>
     <string name="take_pic_item">"Take your picture"</string>
     <string name="call_support_item">"Call support"</string>
+    <string name="logoutDialog_home">", Are you sure that you want to log out??"</string>
 
 
 

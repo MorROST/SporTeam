@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
@@ -15,6 +17,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,16 +25,19 @@ import android.widget.Toast;
 import com.yonimor.sporteam.sporteam.R;
 import com.yonimor.sporteam.sporteam.com.data.*;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 public class Home extends AppCompatActivity {
 
     ListView gameList;
-    ArrayList allGames;
+    ArrayList <Game> allGames, updatedGames;
     GamesAdapter complexGameAdapter;
     TextView hello_txtview;
     String name;
+    ImageView userPic;
 
+    static final int REQUEST_IMAGE_CAPTURE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +51,13 @@ public class Home extends AppCompatActivity {
         setTitle("Hello " + name + "!");
 
         gameList= (ListView) findViewById(R.id.games_listView_home);
+        allGames = StartPage.connectionUtil.GetAllGames(0);
+        if(allGames!=null) {
+            FillGamesListView();
+        }
+        RefreshGames();
 
-        allGames = StartPage.connectionUtil.GetAllGames();
-        FillGamesListView();
+
     }
 
 
@@ -55,6 +65,7 @@ public class Home extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         MenuInflater inflater = getMenuInflater();
+        userPic = (ImageView)findViewById(R.id.userImage_imageView);
         inflater.inflate(R.menu.home_menu, menu);
         return true;
     }
@@ -74,13 +85,68 @@ public class Home extends AppCompatActivity {
 
 
             case R.id.logout_menu:      //Log out and go back to the main activity (Login)
-                //
+
+                AlertDialog.Builder alert = new AlertDialog.Builder(this);
+                alert.setMessage(name + getResources().getString(R.string.logoutDialog_home));
+                alert.setCancelable(true);
+
+                alert.setPositiveButton(
+                        "Yes",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(Home.this);
+                                SharedPreferences.Editor editor = preferences.edit();
+                                editor.putString("email","");
+                                editor.commit();
+                                Intent in = new Intent(Home.this, StartPage.class);
+                                startActivity(in);
+                                finish();
+
+                            }
+                        });
+
+                alert.setNegativeButton(
+                        "No",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+                AlertDialog alert11 = alert.create();
+                alert11.show();
+                break;
 
             case R.id.take_pic_menu:
-                //
+                Intent takePic = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if (takePic.resolveActivity(getPackageManager()) != null) {
+                    startActivityForResult(takePic, REQUEST_IMAGE_CAPTURE);
+                }
 
         }
         return true;
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK)
+        {
+            /*  display image in HOME activity:
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            userPic.setImageBitmap(imageBitmap);
+            Toast.makeText(this, imageBitmap.toString(), Toast.LENGTH_LONG).show();
+            */
+
+            //try to save image to DB
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
+            byte[] bArray = bos.toByteArray();
+
+            System.out.println(bArray.length);
+
+        }
     }
 
     private void FillGamesListView()
@@ -102,5 +168,30 @@ public class Home extends AppCompatActivity {
     public void myAccount(View view) {
 
 
+    }
+
+    public void RefreshGames()
+    {
+        final Handler handler = new Handler();
+        final int delay = 3000; //milliseconds
+        handler.postDelayed(new Runnable(){
+            public void run(){
+                if(allGames==null || allGames.size()==0)
+                {
+                    updatedGames = StartPage.connectionUtil.GetAllGames(0);
+                    allGames = updatedGames;
+                }
+                else {
+                    updatedGames = StartPage.connectionUtil.GetAllGames(allGames.get(allGames.size() - 1).getGameNumber());
+                    if (updatedGames != null) {
+                        for (Game game : updatedGames) {
+                            allGames.add(game);
+                        }
+                        FillGamesListView();
+                    }
+                }
+                handler.postDelayed(this, delay);
+            }
+        }, delay);
     }
 }
