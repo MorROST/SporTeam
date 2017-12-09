@@ -1,6 +1,8 @@
 package com.yonimor.sporteam.sporteam;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +18,7 @@ public class HostCreateNewGame extends Activity {
     EditText address, time, date, numberOfPlayers;
     Spinner city, sportType;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +30,7 @@ public class HostCreateNewGame extends Activity {
         numberOfPlayers = (EditText) findViewById(R.id.numberOfPlayers_editText_hostGame);
         city = (Spinner) findViewById(R.id.pickCity_Spinner);
         sportType = (Spinner) findViewById(R.id.gameCategory_Spinner);
+
     }
 
     public void Back(View view) {
@@ -34,7 +38,10 @@ public class HostCreateNewGame extends Activity {
     }
 
     public void Submit(View view) {
-        Game g = new Game("created by",sportType.getSelectedItem().toString(),city.getSelectedItem().toString(),
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String name = preferences.getString("name", "");
+
+        Game g = new Game(name,sportType.getSelectedItem().toString(),city.getSelectedItem().toString(),
                 time.getText().toString(), date.getText().toString(), address.getText().toString(),
                 Integer.parseInt(numberOfPlayers.getText().toString()));
         int checkIfWorked;

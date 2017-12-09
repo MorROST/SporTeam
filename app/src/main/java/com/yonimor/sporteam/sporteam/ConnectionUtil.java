@@ -33,7 +33,7 @@ public class ConnectionUtil {
         //clientSocket  = new Socket("192.168.0.109", 30545); //mor
         //clientSocket = new Socket("10.0.0.32", 30545);//yoni
         //clientSocket.connect(new InetSocketAddress("10.0.0.32", 30545),5000);
-        clientSocket.connect(new InetSocketAddress("192.168.0.108", 30545),5000);
+        clientSocket.connect(new InetSocketAddress("192.168.0.109", 30545),5000);
         output = clientSocket.getOutputStream();
         input = clientSocket.getInputStream();
         oos = new ObjectOutputStream(output);
