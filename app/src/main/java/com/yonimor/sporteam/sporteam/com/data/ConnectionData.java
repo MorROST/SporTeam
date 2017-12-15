@@ -21,17 +21,17 @@ public class ConnectionData implements Serializable{
     public static final int REGISTER = 5;
     public static final int INSERTGAME = 6;
     public static final int ALLGAMES = 7;
-    public static final int UPDATEGAMES = 8;
+
 
 
     private int requestCode;
-    private String email, password;
-    private int worked;
+    private String email="", password="";
+    private int worked=0;
     private User user;
     private Game game;
     private ArrayList arrayList;
-    private int lastGameAtClient;
-    private String name;
+    private int lastGameAtClient=0;
+    private String name="";
 
     public String getName() {
         return name;

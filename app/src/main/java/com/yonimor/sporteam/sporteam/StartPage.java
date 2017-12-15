@@ -2,22 +2,25 @@ package com.yonimor.sporteam.sporteam;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.yonimor.sporteam.sporteam.com.data.*;
-
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
@@ -33,32 +36,56 @@ public class StartPage extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_page);
-        if(connectionUtil == null) {
-            result = Connecting();
-            if (result == ConnectionData.OK)
-            {
-                Toast.makeText(this, "Connected", Toast.LENGTH_LONG).show();
-            }
-            else if(result == ConnectionData.NOT_OK)
-            {
-                Toast.makeText(this, "NOT Connected", Toast.LENGTH_LONG).show();
-            }
-            else
-            {
-                Toast.makeText(this, "Somthing Wrong", Toast.LENGTH_LONG).show();
+        if(isNetworkStatusAvialable (getApplicationContext())) {
+            Toast.makeText(getApplicationContext(), "internet avialable", Toast.LENGTH_SHORT).show();
+
+        } else {
+            Toast.makeText(getApplicationContext(), "internet is not avialable", Toast.LENGTH_SHORT).show();
+        }
+        ConnectionHandler();
+
+
+
+    }
+
+    public void ConnectionHandler()
+    {
+        result = Connecting();
+        if (result == ConnectionData.OK)
+        {
+            Toast.makeText(this, "Connected", Toast.LENGTH_LONG).show();
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+            this.email = preferences.getString("email", "");
+
+            if (!email.equals("") && !email.equals("null")) {
+                finish();
+                Intent intent = new Intent(this, Home.class);
+                startActivity(intent);
             }
         }
+        else if(result == ConnectionData.NOT_OK)
+        {
+            AlertDialog.Builder builder=new AlertDialog.Builder(this);
+            builder.setTitle("Connection Problem");
+            builder.setMessage("No Connection to server please reload");
 
+            builder.setPositiveButton("Reloade",new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent in = new Intent(StartPage.this, StartPage.class);
+                    finish();
+                    startActivity(in);
+                    dialog.cancel();
 
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        this.email = preferences.getString("email", "");
-
-        if (!email.equals("") && !email.equals("null")) {
-            finish();
-            Intent intent = new Intent(this, Home.class);
-            startActivity(intent);
+                }
+            });
+            AlertDialog alertdialog=builder.create();
+            alertdialog.show();
         }
-
+        else
+        {
+            Toast.makeText(this, "Somthing Wrong", Toast.LENGTH_LONG).show();
+        }
 
     }
 
@@ -68,24 +95,11 @@ public class StartPage extends Activity {
         Integer a = ConnectionData.SOMTHING_WRONG;
         if (hasPermissions()){
             // our app has permissions.
-            /*new Thread(new Runnable(){
-                public void run(){
-                    try {
-                        connectionUtil = new ConnectionUtil();
-                    } catch (IOException e) {
-                        Toast.makeText(null, "NOT connected", Toast.LENGTH_LONG).show();
-                        e.printStackTrace();
-                    }
-                    if(connectionUtil==null)
-                    {
-                        Toast.makeText(null, "NOT connected", Toast.LENGTH_LONG).show();
-                    }
-                }
-            }).start();*/
+
             AsyncClassConnect i = new AsyncClassConnect();
-                try {
-                    a = i.execute().get();
-                    return a;
+            try {
+                a = i.execute().get();
+                return a;
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } catch (ExecutionException e) {
@@ -98,7 +112,6 @@ public class StartPage extends Activity {
         }
         return a;
     }
-
 
     private boolean hasPermissions(){
         int res = 0;
@@ -146,7 +159,7 @@ public class StartPage extends Activity {
             //user granted all permissions we can perform our task.
             AsyncClassConnect i = new AsyncClassConnect();
             try {
-              i.execute().get();
+                i.execute().get();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } catch (ExecutionException e) {
@@ -164,7 +177,17 @@ public class StartPage extends Activity {
 
     }
 
-
+    public static boolean isNetworkStatusAvialable (Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivityManager != null)
+        {
+            NetworkInfo netInfos = connectivityManager.getActiveNetworkInfo();
+            if(netInfos != null)
+                if(netInfos.isConnected())
+                    return true;
+        }
+        return false;
+    }
 
     class AsyncClassConnect extends AsyncTask<Void, Void, Integer>{
 
@@ -173,8 +196,6 @@ public class StartPage extends Activity {
             try {
                 connectionUtil = new ConnectionUtil();
                 return ConnectionData.OK;
-
-
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -194,7 +215,7 @@ public class StartPage extends Activity {
 
         String name;
         name = StartPage.connectionUtil.LogIn(email.getText().toString(),password.getText().toString());
-        if(!name.equals("")) {
+        if(!name.equals("") && !name.equals(String.valueOf(ConnectionData.SOMTHING_WRONG))) {
 
             keepLoged = (CheckBox) findViewById(R.id.stayLogedIn_txt_login);
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -213,7 +234,7 @@ public class StartPage extends Activity {
         {
             Toast.makeText(this, "Email or password are incorrect", Toast.LENGTH_LONG).show();
         }
-        else
+        else if(name.equals(String.valueOf(ConnectionData.SOMTHING_WRONG)))
         {
             Toast.makeText(this, "Somthing is wrong contact the help center", Toast.LENGTH_LONG).show();
         }

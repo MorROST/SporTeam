@@ -176,20 +176,58 @@ public class Home extends AppCompatActivity {
         final int delay = 3000; //milliseconds
         handler.postDelayed(new Runnable(){
             public void run(){
-                if(allGames==null || allGames.size()==0)
-                {
-                    updatedGames = StartPage.connectionUtil.GetAllGames(0);
-                    allGames = updatedGames;
-                }
-                else {
-                    updatedGames = StartPage.connectionUtil.GetAllGames(allGames.get(allGames.size() - 1).getGameNumber());
-                    if (updatedGames != null) {
-                        for (Game game : updatedGames) {
-                            allGames.add(game);
-                        }
-                        FillGamesListView();
+                if(StartPage.isNetworkStatusAvialable (getApplicationContext())) {
+                    if(allGames==null || allGames.size()==0)
+                    {
+                        updatedGames = StartPage.connectionUtil.GetAllGames(0);
+                        allGames = updatedGames;
                     }
+                    else {
+                        updatedGames = StartPage.connectionUtil.GetAllGames(allGames.get(allGames.size() - 1).getGameNumber());
+                        if (updatedGames != null) {
+                            for (Game game : updatedGames) {
+                                allGames.add(game);
+                                FillGamesListView();
+                            }
+                        }
+                        else {
+                            android.app.AlertDialog.Builder builder=new android.app.AlertDialog.Builder(Home.this);
+                            builder.setTitle("Connection Problem");
+                            builder.setMessage("Client Server error please reload");
+
+                            builder.setPositiveButton("Reloade",new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent in = new Intent(Home.this, StartPage.class);
+                                    finish();
+                                    startActivity(in);
+                                    dialog.cancel();
+
+                                }
+                            });
+                            android.app.AlertDialog alertdialog=builder.create();
+                            alertdialog.show();
+                        }
+                    }
+                } else {
+                    android.app.AlertDialog.Builder builder=new android.app.AlertDialog.Builder(Home.this);
+                    builder.setTitle("Connection Problem");
+                    builder.setMessage("No intenet Connection please reload");
+
+                    builder.setPositiveButton("Reloade",new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent in = new Intent(Home.this, StartPage.class);
+                            finish();
+                            startActivity(in);
+                            dialog.cancel();
+
+                        }
+                    });
+                    android.app.AlertDialog alertdialog=builder.create();
+                    alertdialog.show();
                 }
+
                 handler.postDelayed(this, delay);
             }
         }, delay);

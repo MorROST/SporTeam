@@ -1,6 +1,7 @@
 package com.yonimor.sporteam.sporteam;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,14 +27,16 @@ public class ConnectionUtil {
     ObjectOutputStream oos;
     ObjectInputStream ois;
 
+
+
     public ConnectionUtil() throws Exception {
 
         //!!!!!!!!!!!!!!IP Must Change To NetBeans Machine IP AND NOT 127.0.0.1
         clientSocket = new Socket();
         //clientSocket  = new Socket("192.168.0.109", 30545); //mor
-        //clientSocket = new Socket("10.0.0.32", 30545);//yoni
+        clientSocket = new Socket("10.0.0.32", 30545);//yoni
         //clientSocket.connect(new InetSocketAddress("10.0.0.32", 30545),5000);
-        clientSocket.connect(new InetSocketAddress("192.168.0.109", 30545),5000);
+        //clientSocket.connect(new InetSocketAddress("192.168.0.109", 30545),5000);
         output = clientSocket.getOutputStream();
         input = clientSocket.getInputStream();
         oos = new ObjectOutputStream(output);
@@ -69,6 +72,9 @@ public class ConnectionUtil {
         AsyncClassArrayList i = new AsyncClassArrayList(requestCD);
         try {
             ArrayList a = i.execute().get();
+            if(a.get(0) instanceof Integer) {
+                return null;
+            }
             return a;
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -129,10 +135,12 @@ public class ConnectionUtil {
                 oos.writeObject(requestCD);
                 responseCD = (ConnectionData) ois.readObject();
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.e("IOException", "IOException");
+                return ConnectionData.SOMTHING_WRONG;
             } catch (ClassNotFoundException e) {
-                e.printStackTrace();
+                Log.e("ClassNotFoundException", "ClassNotFoundException");
             } catch (Exception e) {
+                Log.e("Exception", "Exception ");
                 e.printStackTrace();
             }
             return responseCD.getWorked();
@@ -144,6 +152,8 @@ public class ConnectionUtil {
         }
     }
 
+
+    ////////////////Make sure if the array return int array so the first input isn't 3 (AKA ConnectionData.SOMTHING_WRONG)
     class AsyncClassArrayList extends AsyncTask<Void, Void, ArrayList> {
         ConnectionData requestCD;
         ConnectionData responseCD = new ConnectionData();
@@ -159,7 +169,9 @@ public class ConnectionUtil {
                 oos.writeObject(requestCD);
                 responseCD = (ConnectionData) ois.readObject();
             } catch (IOException e) {
-                e.printStackTrace();
+                ArrayList badAL = new ArrayList();
+                badAL.add(ConnectionData.SOMTHING_WRONG);
+                return  badAL;
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             } catch (Exception e) {
@@ -189,10 +201,12 @@ public class ConnectionUtil {
                 oos.writeObject(requestCD);
                 responseCD = (ConnectionData) ois.readObject();
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.e("IOException", "IOException");
+                return String.valueOf(ConnectionData.SOMTHING_WRONG);
             } catch (ClassNotFoundException e) {
-                e.printStackTrace();
+                Log.e("ClassNotFoundException", "ClassNotFoundException");
             } catch (Exception e) {
+                Log.e("Exception", "Exception ");
                 e.printStackTrace();
             }
             return responseCD.getName();
