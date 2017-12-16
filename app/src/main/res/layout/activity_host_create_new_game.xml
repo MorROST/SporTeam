@@ -83,7 +83,7 @@
 
     </LinearLayout>
 
-    <!--        ////////////////yoni for testing//////////////                     -->
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -96,16 +96,16 @@
 
 
         <TextView
-            android:id="@+id/address_label_hostGame"
+            android:id="@+id/address_label"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="50"
             android:background="@android:color/transparent"
-            android:text="hard coded city"
+            android:text="@string/address"
             android:textSize="20sp" />
 
         <EditText
-            android:id="@+id/address_editText_hostGame"
+            android:id="@+id/address_editText"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
@@ -125,12 +125,12 @@
 
 
         <TextView
-            android:id="@+id/numberOfPlayers_label_hostGame"
+            android:id="@+id/numberOfPlayers_label"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="50"
             android:background="@android:color/transparent"
-            android:text="hard coded number of players cast2int"
+            android:text="@string/numPlayers"
             android:textSize="20sp" />
 
         <EditText
@@ -154,12 +154,12 @@
 
 
         <TextView
-            android:id="@+id/time_label_hostGame"
+            android:id="@+id/time_label"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="50"
             android:background="@android:color/transparent"
-            android:text="hard coded time"
+            android:text="@string/timeSelect"
             android:textSize="20sp" />
 
         <EditText
@@ -188,16 +188,17 @@
         android:layout_height="wrap_content"
         android:layout_weight="50"
         android:background="@android:color/transparent"
-        android:text="hard coded date"
+        android:text="@string/dateSelect"
         android:textSize="20sp" />
 
-    <EditText
-        android:id="@+id/date_editText_hostGame"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:layout_weight="50"
-        android:textSize="20sp"/>
+        <EditText
+            android:id="@+id/datePicker_edittext"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="50"
+            android:textColor="@color/colorPrimaryDark"
+            android:ems="10"
+            android:inputType="date" />
 
     </LinearLayout>
 
@@ -212,7 +213,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="hard coded submit"
+            android:text="@string/submitBtn"
             android:onClick="Submit"/>
 
         <Button
@@ -220,7 +221,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="hard coded back"
+            android:text="@string/backBtn"
             android:onClick="Back"/>
     </LinearLayout>
 

@@ -24,11 +24,16 @@
     <string name="confirm">Confirm</string>
 
 
-    /////////////////////////////////////////Host new game
-    activity/////////////////////////////////////////////
+    /////////////////////////////////////////Host new game activity/////////////////////////////////////////////
 
     <string name="category_label">Pick a category</string>
-    <string name="CitiesName">Pick a City location</string>
+    <string name="CitiesName">City</string>
+    <string name="numPlayers">Select maximum players</string>
+    <string name="timeSelect">Select time</string>
+    <string name="dateSelect">Select date</string>
+    <string name="address">Address</string>
+    <string name="submitBtn">Submit</string>
+    <string name="backBtn">Back</string>
     ////////////REGISTER//////////////
 
 
