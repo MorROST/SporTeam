@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -36,6 +37,8 @@ public class Home extends AppCompatActivity {
     TextView hello_txtview;
     String name;
     ImageView userPic;
+    int allGamesReloadCount = 0;
+    final Handler handler = new Handler();
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
@@ -51,14 +54,22 @@ public class Home extends AppCompatActivity {
         setTitle("Hello " + name + "!");
 
         gameList= (ListView) findViewById(R.id.games_listView_home);
-        allGames = StartPage.connectionUtil.GetAllGames(0);
         if(allGames!=null) {
             FillGamesListView();
         }
+
+        gameList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Game game = allGames.get(position);
+
+            }
+        });
+        allGames = StartPage.connectionUtil.GetAllGames(0);
+
         RefreshGames();
-
-
     }
+
 
 
     @Override
@@ -100,6 +111,7 @@ public class Home extends AppCompatActivity {
                                 editor.commit();
                                 Intent in = new Intent(Home.this, StartPage.class);
                                 startActivity(in);
+                                handler.removeCallbacksAndMessages(null);
                                 finish();
 
                             }
@@ -172,8 +184,8 @@ public class Home extends AppCompatActivity {
 
     public void RefreshGames()
     {
-        final Handler handler = new Handler();
-        final int delay = 3000; //milliseconds
+
+        final int delay = 5000; //milliseconds
         handler.postDelayed(new Runnable(){
             public void run(){
                 if(StartPage.isNetworkStatusAvialable (getApplicationContext())) {
@@ -185,28 +197,39 @@ public class Home extends AppCompatActivity {
                     else {
                         updatedGames = StartPage.connectionUtil.GetAllGames(allGames.get(allGames.size() - 1).getGameNumber());
                         if (updatedGames != null) {
-                            for (Game game : updatedGames) {
-                                allGames.add(game);
-                                FillGamesListView();
-                            }
-                        }
-                        else {
-                            android.app.AlertDialog.Builder builder=new android.app.AlertDialog.Builder(Home.this);
-                            builder.setTitle("Connection Problem");
-                            builder.setMessage("Client Server error please reload");
+                            Home.this.allGamesReloadCount++;
+                            if (Home.this.allGamesReloadCount < 6) {
 
-                            builder.setPositiveButton("Reloade",new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Intent in = new Intent(Home.this, StartPage.class);
-                                    finish();
-                                    startActivity(in);
-                                    dialog.cancel();
-
+                                for (Game game : updatedGames) {
+                                    allGames.add(game);
                                 }
-                            });
-                            android.app.AlertDialog alertdialog=builder.create();
-                            alertdialog.show();
+                            } else {
+                                updatedGames = StartPage.connectionUtil.GetAllGames(0);
+                                allGames = updatedGames;
+                                Home.this.allGamesReloadCount = 0;
+                            }
+                            FillGamesListView();
+                        }
+                             else {
+                                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(Home.this);
+                                builder.setTitle("Connection Problem");
+                                builder.setMessage("Client Server error please reload");
+
+                                builder.setPositiveButton("Reload", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Intent in = new Intent(Home.this, StartPage.class);
+                                        finish();
+                                        startActivity(in);
+                                        dialog.cancel();
+                                        StartPage.connectionUtil = null;
+                                        handler.removeCallbacksAndMessages(null);
+
+                                    }
+                                });
+                                android.app.AlertDialog alertdialog = builder.create();
+                                alertdialog.show();
+
                         }
                     }
                 } else {
@@ -214,13 +237,14 @@ public class Home extends AppCompatActivity {
                     builder.setTitle("Connection Problem");
                     builder.setMessage("No intenet Connection please reload");
 
-                    builder.setPositiveButton("Reloade",new DialogInterface.OnClickListener() {
+                    builder.setPositiveButton("Reload",new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             Intent in = new Intent(Home.this, StartPage.class);
                             finish();
                             startActivity(in);
                             dialog.cancel();
+                            handler.removeCallbacksAndMessages(null);
 
                         }
                     });

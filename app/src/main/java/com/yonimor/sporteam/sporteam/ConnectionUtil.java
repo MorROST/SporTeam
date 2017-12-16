@@ -2,6 +2,8 @@ package com.yonimor.sporteam.sporteam;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Button;
+import android.widget.TextView;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -33,10 +35,9 @@ public class ConnectionUtil {
 
         //!!!!!!!!!!!!!!IP Must Change To NetBeans Machine IP AND NOT 127.0.0.1
         clientSocket = new Socket();
-        //clientSocket  = new Socket("192.168.0.109", 30545); //mor
-        clientSocket = new Socket("10.0.0.32", 30545);//yoni
+
         //clientSocket.connect(new InetSocketAddress("10.0.0.32", 30545),5000);
-        //clientSocket.connect(new InetSocketAddress("192.168.0.109", 30545),5000);
+        clientSocket.connect(new InetSocketAddress("192.168.0.104", 30545),5000);
         output = clientSocket.getOutputStream();
         input = clientSocket.getInputStream();
         oos = new ObjectOutputStream(output);
@@ -70,19 +71,17 @@ public class ConnectionUtil {
         requestCD.setLastGameAtClient(lastGame);
 
         AsyncClassArrayList i = new AsyncClassArrayList(requestCD);
+        //ArrayList a = new ArrayList();
         try {
             ArrayList a = i.execute().get();
-            if(a.get(0) instanceof Integer) {
-                return null;
+            if(a != null) {
+                return a;
             }
-            return a;
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
-
     }
 
     public int Register(User us) {
@@ -169,9 +168,7 @@ public class ConnectionUtil {
                 oos.writeObject(requestCD);
                 responseCD = (ConnectionData) ois.readObject();
             } catch (IOException e) {
-                ArrayList badAL = new ArrayList();
-                badAL.add(ConnectionData.SOMTHING_WRONG);
-                return  badAL;
+                e.printStackTrace();
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             } catch (Exception e) {

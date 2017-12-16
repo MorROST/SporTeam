@@ -42,8 +42,9 @@ public class StartPage extends Activity {
         } else {
             Toast.makeText(getApplicationContext(), "internet is not avialable", Toast.LENGTH_SHORT).show();
         }
-        ConnectionHandler();
-
+        if (connectionUtil == null) {
+            ConnectionHandler();
+        }
 
 
     }
@@ -69,7 +70,7 @@ public class StartPage extends Activity {
             builder.setTitle("Connection Problem");
             builder.setMessage("No Connection to server please reload");
 
-            builder.setPositiveButton("Reloade",new DialogInterface.OnClickListener() {
+            builder.setPositiveButton("Reload",new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     Intent in = new Intent(StartPage.this, StartPage.class);
