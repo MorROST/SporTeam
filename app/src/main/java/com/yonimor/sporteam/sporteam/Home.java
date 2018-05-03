@@ -5,23 +5,25 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.net.Uri;
+
+
+import android.media.Image;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import com.yonimor.sporteam.sporteam.R;
 import com.yonimor.sporteam.sporteam.com.data.*;
@@ -130,33 +132,39 @@ public class Home extends AppCompatActivity {
                 break;
 
             case R.id.take_pic_menu:
+
                 Intent takePic = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 if (takePic.resolveActivity(getPackageManager()) != null) {
                     startActivityForResult(takePic, REQUEST_IMAGE_CAPTURE);
                 }
 
         }
+
         return true;
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK)
         {
-            /*  display image in HOME activity:
+            /*// display image in HOME activity:
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             userPic.setImageBitmap(imageBitmap);
-            Toast.makeText(this, imageBitmap.toString(), Toast.LENGTH_LONG).show();
-            */
+            //Toast.makeText(this, imageBitmap.toString(), Toast.LENGTH_LONG).show();*/
+
 
             //try to save image to DB
+
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
             byte[] bArray = bos.toByteArray();
+            String base64Code = Base64.encodeToString(bArray, Base64.DEFAULT);
+            StartPage.connectionUtil.UploadImage(base64Code);
+            userPic.setImageBitmap(imageBitmap);
 
-            System.out.println(bArray.length);
+
 
         }
     }
@@ -255,5 +263,19 @@ public class Home extends AppCompatActivity {
                 handler.postDelayed(this, delay);
             }
         }, delay);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();  // Always call the superclass method first
+
+        handler.removeCallbacksAndMessages(null);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();  // Always call the superclass method first
+
+        RefreshGames();
     }
 }

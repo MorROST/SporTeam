@@ -1,5 +1,6 @@
 package com.yonimor.sporteam.sporteam;
 
+import android.media.Image;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Button;
@@ -63,7 +64,23 @@ public class ConnectionUtil {
     }
 
 
+    public int UploadImage(String image)
+    {
+        ConnectionData requestCD = new ConnectionData();
+        requestCD.setRequestCode(ConnectionData.UPLOADIMAGE);
+        requestCD.setName(image);
+        AsyncClassInt i = new AsyncClassInt(requestCD);
+        try {
+            Integer a = i.execute().get();
+            return a;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return 3;
 
+    }
 
     public ArrayList GetAllGames(int lastGame) {
         ConnectionData requestCD = new ConnectionData();
