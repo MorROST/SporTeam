@@ -49,13 +49,14 @@ public class Home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-
+        userPic = (ImageView)findViewById(R.id.userImage_imageView);
+        gameList= (ListView) findViewById(R.id.games_listView_home);
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         this.name = preferences.getString("name", "");
         setTitle("Hello " + name + "!");
+        GetProfileImage();
 
-        gameList= (ListView) findViewById(R.id.games_listView_home);
         if(allGames!=null) {
             FillGamesListView();
         }
@@ -72,13 +73,22 @@ public class Home extends AppCompatActivity {
         RefreshGames();
     }
 
+    public void GetProfileImage()
+    {
+        Bitmap profileImg = StartPage.connectionUtil.GetProfilePicture(this.name);
+        if (profileImg!=null)
+        {
+            userPic.setImageBitmap(profileImg);
+        }
+
+    }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         MenuInflater inflater = getMenuInflater();
-        userPic = (ImageView)findViewById(R.id.userImage_imageView);
+
         inflater.inflate(R.menu.home_menu, menu);
         return true;
     }
@@ -161,7 +171,7 @@ public class Home extends AppCompatActivity {
             imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
             byte[] bArray = bos.toByteArray();
             String base64Code = Base64.encodeToString(bArray, Base64.DEFAULT);
-            StartPage.connectionUtil.UploadImage(base64Code);
+            StartPage.connectionUtil.UploadImage(base64Code, this.name);
             userPic.setImageBitmap(imageBitmap);
 
 
@@ -196,7 +206,7 @@ public class Home extends AppCompatActivity {
         final int delay = 5000; //milliseconds
         handler.postDelayed(new Runnable(){
             public void run(){
-                if(StartPage.isNetworkStatusAvialable (getApplicationContext())) {
+                if(StartPage.isNetworkStatusAvialable(getApplicationContext())) {
                     if(allGames==null || allGames.size()==0)
                     {
                         updatedGames = StartPage.connectionUtil.GetAllGames(0);
@@ -220,7 +230,7 @@ public class Home extends AppCompatActivity {
                         }
                              else {
                                 android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(Home.this);
-                                builder.setTitle("Connection Problem");
+                                builder.setTitle("Connection Problem");             //TODO: need to check what this 'else' block does......
                                 builder.setMessage("Client Server error please reload");
 
                                 builder.setPositiveButton("Reload", new DialogInterface.OnClickListener() {

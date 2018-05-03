@@ -5,6 +5,10 @@
  */
 package com.yonimor.sporteam.sporteam.com.data;
 
+
+
+
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -21,6 +25,8 @@ public class ConnectionData implements Serializable{
     public static final int REGISTER = 5;
     public static final int INSERTGAME = 6;
     public static final int ALLGAMES = 7;
+    public static final int UPLOADIMAGE = 8;
+    public static final int GETIMAGE = 9;
 
 
 
@@ -32,6 +38,16 @@ public class ConnectionData implements Serializable{
     private ArrayList arrayList;
     private int lastGameAtClient=0;
     private String name="";
+    private String stringImage;
+
+    public String getStringImage() {
+        return stringImage;
+    }
+
+    public void setStringImage(String stringImage) {
+        this.stringImage = stringImage;
+    }
+
 
     public String getName() {
         return name;

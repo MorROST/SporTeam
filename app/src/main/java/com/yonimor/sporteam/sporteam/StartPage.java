@@ -20,6 +20,8 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.yonimor.sporteam.sporteam.com.data.*;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
@@ -36,7 +38,7 @@ public class StartPage extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_page);
-        if(isNetworkStatusAvialable (getApplicationContext())) {
+        if(isNetworkStatusAvialable(getApplicationContext())) {
             Toast.makeText(getApplicationContext(), "internet avialable", Toast.LENGTH_SHORT).show();
 
         } else {
@@ -45,7 +47,7 @@ public class StartPage extends Activity {
         if (connectionUtil == null) {
             ConnectionHandler();
         }
-
+        String token = FirebaseInstanceId.getInstance().getToken();
 
     }
 

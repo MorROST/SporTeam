@@ -1,11 +1,15 @@
 package com.yonimor.sporteam.sporteam;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.os.AsyncTask;
+import android.util.Base64;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -38,7 +42,7 @@ public class ConnectionUtil {
         clientSocket = new Socket();
 
         //clientSocket.connect(new InetSocketAddress("10.0.0.32", 30545),5000);
-        clientSocket.connect(new InetSocketAddress("192.168.0.104", 30545),5000);
+        clientSocket.connect(new InetSocketAddress("192.168.86.127", 30545),5000);
         output = clientSocket.getOutputStream();
         input = clientSocket.getInputStream();
         oos = new ObjectOutputStream(output);
@@ -64,11 +68,12 @@ public class ConnectionUtil {
     }
 
 
-    public int UploadImage(String image)
+    public int UploadImage(String image, String name)
     {
         ConnectionData requestCD = new ConnectionData();
         requestCD.setRequestCode(ConnectionData.UPLOADIMAGE);
-        requestCD.setName(image);
+        requestCD.setStringImage(image);
+        requestCD.setName(name);
         AsyncClassInt i = new AsyncClassInt(requestCD);
         try {
             Integer a = i.execute().get();
@@ -81,6 +86,8 @@ public class ConnectionUtil {
         return 3;
 
     }
+
+
 
     public ArrayList GetAllGames(int lastGame) {
         ConnectionData requestCD = new ConnectionData();
@@ -135,7 +142,70 @@ public class ConnectionUtil {
         return 3;
     }
 
+    public Bitmap GetProfilePicture(String name)
+    {
+        ConnectionData requestCD = new ConnectionData();
+        requestCD.setRequestCode(ConnectionData.GETIMAGE);
+        requestCD.setName(name);
+
+        AsyncClassimg i = new AsyncClassimg(requestCD);
+        try {
+            Bitmap a = i.execute().get();
+            return a;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     ///////////////////////AsyncClasses////////////////////////
+    class AsyncClassimg extends AsyncTask<Void, Void, Bitmap> {
+        ConnectionData requestCD;
+        ConnectionData responseCD = new ConnectionData();
+
+        AsyncClassimg(ConnectionData requestCD) {
+            this.requestCD = requestCD;
+        }
+
+        @Override
+        protected Bitmap doInBackground(Void... params) {
+
+            try {
+                oos.writeObject(requestCD);
+                responseCD = (ConnectionData) ois.readObject();
+
+            } catch (IOException e) {
+                Log.e("IOException", "IOException");
+            } catch (ClassNotFoundException e) {
+                Log.e("ClassNotFoundException", "ClassNotFoundException");
+            } catch (Exception e) {
+                Log.e("Exception", "Exception ");
+                e.printStackTrace();
+            }
+
+            byte[] btDataFile = null;
+            btDataFile = Base64.decode(responseCD.getStringImage(), Base64.DEFAULT);
+            Bitmap bitmap;
+            bitmap = BitmapFactory.decodeByteArray(btDataFile, 0, btDataFile.length);
+                /*ByteArrayInputStream arrayInputStream = new ByteArrayInputStream(btDataFile);
+                Bitmap bitmap = BitmapFactory.decodeStream(arrayInputStream);*/
+            /*Bitmap bitmap;
+            bitmap = BitmapFactory.decodeByteArray(arrayInputStream);*/
+            return bitmap;
+
+
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap img) {
+            super.onPostExecute(img);
+        }
+    }
+
+
     class AsyncClassInt extends AsyncTask<Void, Void, Integer> {
         ConnectionData requestCD;
         ConnectionData responseCD = new ConnectionData();
@@ -199,6 +269,7 @@ public class ConnectionUtil {
             super.onPostExecute(arrayList);
         }
     }
+
 
     class AsyncClassString extends AsyncTask<Void, Void, String> {
         ConnectionData requestCD;
