@@ -27,6 +27,7 @@ public class ConnectionData implements Serializable{
     public static final int ALLGAMES = 7;
     public static final int UPLOADIMAGE = 8;
     public static final int GETIMAGE = 9;
+    public static final int SETTOKEN = 10;
 
 
 
@@ -39,6 +40,15 @@ public class ConnectionData implements Serializable{
     private int lastGameAtClient=0;
     private String name="";
     private String stringImage;
+    private String token;
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     public String getStringImage() {
         return stringImage;

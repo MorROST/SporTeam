@@ -1,5 +1,8 @@
 package com.yonimor.sporteam.sporteam;
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 
@@ -9,9 +12,14 @@ import com.google.firebase.iid.FirebaseInstanceIdService;
 
 public class FireBaseNtifications extends FirebaseInstanceIdService{
     private static final String TAG = "FireBaseNtifications";
+    String name;
+
 
     @Override
     public void onTokenRefresh() {
         String latestToken = FirebaseInstanceId.getInstance().getToken();
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        this.name = preferences.getString("name", "");
+        StartPage.connectionUtil.SendRegistrationToServer(this.name, latestToken);
     }
 }

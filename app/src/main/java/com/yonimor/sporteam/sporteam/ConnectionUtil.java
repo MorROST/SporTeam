@@ -161,6 +161,24 @@ public class ConnectionUtil {
         return null;
     }
 
+    public int SendRegistrationToServer(String name, String token)
+    {
+        ConnectionData requestCD = new ConnectionData();
+        requestCD.setRequestCode(ConnectionData.SETTOKEN);
+        requestCD.setName(name);
+        requestCD.setToken(token);
+        AsyncClassInt i = new AsyncClassInt(requestCD);
+        try {
+            Integer a = i.execute().get();
+            return a;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return 3;
+    }
+
     ///////////////////////AsyncClasses////////////////////////
     class AsyncClassimg extends AsyncTask<Void, Void, Bitmap> {
         ConnectionData requestCD;

@@ -1,6 +1,7 @@
 package com.yonimor.sporteam.sporteam.com.data;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Created by TheYoni on 11/11/2017.
@@ -11,6 +12,10 @@ public class Game implements Serializable {
     int numberOfPlayers;
     int gameNumber;
 
+
+
+    ArrayList<String> players;
+
     public Game(String createdBy, String sportType, String city, String time, String date, String loaction, int numberOfPlayers)
     {
         this.createdBy = createdBy;
@@ -20,6 +25,7 @@ public class Game implements Serializable {
         this.date = date;
         this.loaction = loaction;
         this.numberOfPlayers = numberOfPlayers;
+        this.players = new ArrayList<String>();
     }
 
     public int getGameNumber() {
@@ -84,5 +90,17 @@ public class Game implements Serializable {
 
     public void setNumberOfPlayers(int numberOfPlayers) {
         this.numberOfPlayers = numberOfPlayers;
+    }
+
+    public void AddPlayer(String playerName)
+    {
+        this.players.add(playerName);
+    }
+    public void RemovePlayer(String playerName)
+    {
+        this.players.remove(playerName);
+    }
+    public ArrayList<String> getPlayers() {
+        return players;
     }
 }
