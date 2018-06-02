@@ -21,7 +21,7 @@ public class ConnectionData implements Serializable{
     public static final int REGISTER = 5;
     public static final int INSERTGAME = 6;
     public static final int ALLGAMES = 7;
-
+    public static final int UPLOADIMAGE = 8;
 
 
     private int requestCode;
