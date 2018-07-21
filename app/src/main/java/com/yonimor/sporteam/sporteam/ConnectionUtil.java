@@ -18,6 +18,7 @@ import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import com.yonimor.sporteam.sporteam.com.data.*;
@@ -41,8 +42,8 @@ public class ConnectionUtil {
         //!!!!!!!!!!!!!!IP Must Change To NetBeans Machine IP AND NOT 127.0.0.1
         clientSocket = new Socket();
 
-        //clientSocket.connect(new InetSocketAddress("10.0.0.32", 30545),5000);
-        clientSocket.connect(new InetSocketAddress("192.168.86.127", 30545),5000);
+        //clientSocket.connect(new InetSocketAddress("10.0.0.6", 30545),5000);
+        clientSocket.connect(new InetSocketAddress("10.0.133.51", 30545),5000);
         output = clientSocket.getOutputStream();
         input = clientSocket.getInputStream();
         oos = new ObjectOutputStream(output);
@@ -161,12 +162,76 @@ public class ConnectionUtil {
         return null;
     }
 
-    public int SendRegistrationToServer(String name, String token)
+    public int SendRegistrationToServer(String email, String token)
     {
         ConnectionData requestCD = new ConnectionData();
         requestCD.setRequestCode(ConnectionData.SETTOKEN);
-        requestCD.setName(name);
+        requestCD.setEmail(email);
         requestCD.setToken(token);
+        AsyncClassInt i = new AsyncClassInt(requestCD);
+        try {
+            Integer a = i.execute().get();
+            return a;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return 3;
+    }
+
+    public ArrayList GetAllMyGames_filter(String fname) {
+        ConnectionData requestCD = new ConnectionData();
+        requestCD.setRequestCode(ConnectionData.ALLMYGAMES_FILTER);
+        requestCD.setName(fname);
+
+
+        AsyncClassArrayList i = new AsyncClassArrayList(requestCD);
+        //ArrayList a = new ArrayList();
+        try {
+            ArrayList a = i.execute().get();
+            if(a != null) {
+                return a;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+	
+	    public ArrayList GetMyRegistredGames(String email)
+    {
+        ConnectionData requestCD = new ConnectionData();
+        requestCD.setRequestCode(ConnectionData.MYREGISTEREDGAMES_FILTER);
+        requestCD.setName(email);
+
+
+        AsyncClassArrayList i = new AsyncClassArrayList(requestCD);
+        //ArrayList a = new ArrayList();
+		        try {
+            ArrayList a = i.execute().get();
+            if(a != null) {
+                return a;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+
+
+
+
+    }
+
+    public int JoinGame(String email,String name, int gameNumber)
+    {
+        ConnectionData requestCD = new ConnectionData();
+        requestCD.setRequestCode(ConnectionData.JOINGAME);
+        requestCD.setEmail(email);
+        requestCD.setName(name);
+        requestCD.setGameNumber(gameNumber);
         AsyncClassInt i = new AsyncClassInt(requestCD);
         try {
             Integer a = i.execute().get();
