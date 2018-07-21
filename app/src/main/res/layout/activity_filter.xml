@@ -21,72 +21,73 @@
         android:layout_height="wrap_content"
         android:layout_weight="10"
         android:orientation="horizontal">
-
-        <CheckBox
-            android:id="@+id/myGames_cb_filter"
+        <RadioGroup
+            android:id="@+id/myGames_r.group_filter"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" >
+                    <RadioButton
+                        android:id="@+id/myGames_rb_filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text= "@string/myGames_rb_filter" />
 
-        <TextView
-            android:id="@+id/myGames_txt_filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/myGames" />
+                    <RadioButton
+                        android:id="@+id/myRegisterGames_rb_filter"
+                        android:layout_width="180dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text= "@string/myRegistersGames_rb_filter" />
+
+        </RadioGroup>
+
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="10"
-        android:orientation="horizontal">
+    <RadioGroup
+        android:id="@+id/gameCategory_r.group_filter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="10"
+                    android:orientation="horizontal">
+                    <RadioButton
+                        android:id="@+id/soccer_rb_filter"
+                        android:layout_width="180dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text= "@string/soccer_rb_filter" />
+                </LinearLayout>
 
-        <CheckBox
-            android:id="@+id/gameSoccer_cb_filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="10"
+                    android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/soccer_lab_filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/soccer" />
-    </LinearLayout>
+                    <RadioButton
+                        android:id="@+id/basketball_rb_filter"
+                        android:layout_width="180dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text= "@string/basketball_rb_filter" />
+                </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="10"
-        android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="10"
+                    android:orientation="horizontal">
 
-        <CheckBox
-            android:id="@+id/gameBasketball_cb_filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <TextView
-            android:id="@+id/basketball_lab_filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/basketball" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="10"
-        android:orientation="horizontal">
-
-        <CheckBox
-            android:id="@+id/gameTennis_cb_filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <TextView
-            android:id="@+id/tennis_lab_filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tennis" />
-    </LinearLayout>
+                    <RadioButton
+                        android:id="@+id/tennis_rb_filter"
+                        android:layout_width="180dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text= "@string/tennis_rb_filter" />
+                </LinearLayout>
+    </RadioGroup>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -175,7 +176,7 @@
             android:layout_weight="1"
             android:text="@string/confirm"
             android:layout_gravity="bottom"
-            android:onClick="Filter"/>
+            android:onClick="submitFilter"/>
     </LinearLayout>
 
 
