@@ -15,16 +15,20 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-
+import com.google.android.gms.games.Games;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.yonimor.sporteam.sporteam.R;
 import com.yonimor.sporteam.sporteam.com.data.*;
 
@@ -38,11 +42,18 @@ public class Home extends AppCompatActivity {
     GamesAdapter complexGameAdapter;
     TextView hello_txtview;
     String name;
+    String email;
     ImageView userPic;
     int allGamesReloadCount = 0;
     final Handler handler = new Handler();
+    Runnable runnable = null;
+    boolean needRefresh = true; //Turn on or off the Refresh method
+
+
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
+    static final int FILTER_GAME = 2;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +65,7 @@ public class Home extends AppCompatActivity {
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         this.name = preferences.getString("name", "");
+        this.email = preferences.getString("email", "");
         setTitle("Hello " + name + "!");
         GetProfileImage();
 
@@ -65,12 +77,32 @@ public class Home extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Game game = allGames.get(position);
-
+                Intent intent = new Intent(Home.this, GameView.class);
+                intent.putExtra("game", game);
+                startActivity(intent);
+                /*int result = StartPage.connectionUtil.JoinGame(Home.this.name, Home.this.email, game.getGameNumber());
+                if(result == ConnectionData.OK) {
+                    Toast.makeText(Home.this, "you were aded to this game", Toast.LENGTH_SHORT).show();
+                }
+                else if (result == ConnectionData.NOT_OK)
+                {
+                    Toast.makeText(Home.this, "you are already in this game", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(Home.this, "SOMETHING IS WRONG", Toast.LENGTH_SHORT).show();
+                }*/
             }
         });
         allGames = StartPage.connectionUtil.GetAllGames(0);
-
+        complexGameAdapter = new GamesAdapter(this, R.layout.games_list_view, allGames);
+        gameList.setAdapter(complexGameAdapter);
         RefreshGames();
+        initFCM();
+    }
+
+    private void initFCM() {
+        String token = FirebaseInstanceId.getInstance().getToken();
+        StartPage.connectionUtil.SendRegistrationToServer(this.email, token);
     }
 
     public void GetProfileImage()
@@ -147,6 +179,9 @@ public class Home extends AppCompatActivity {
                 if (takePic.resolveActivity(getPackageManager()) != null) {
                     startActivityForResult(takePic, REQUEST_IMAGE_CAPTURE);
                 }
+                break;
+
+
 
         }
 
@@ -173,21 +208,26 @@ public class Home extends AppCompatActivity {
             String base64Code = Base64.encodeToString(bArray, Base64.DEFAULT);
             StartPage.connectionUtil.UploadImage(base64Code, this.name);
             userPic.setImageBitmap(imageBitmap);
-
-
+        }
+        else if (requestCode == FILTER_GAME  && resultCode == RESULT_OK);
+        {
+            updatedGames = (ArrayList) data.getExtras().getSerializable("gameList");
+            needRefresh = false;        //Turn off the refresh method
+			allGames.clear();
+            FillGamesListView();
 
         }
     }
 
     private void FillGamesListView()
     {
-        complexGameAdapter = new GamesAdapter(this, R.layout.games_list_view,allGames);
-        gameList.setAdapter(complexGameAdapter);
+        allGames.addAll(updatedGames);
+        complexGameAdapter.notifyDataSetChanged();
     }
 
     public void Filter(View view) {
-        Intent in = new Intent(this, Filter.class);
-        startActivity(in);
+        Intent returnedGameList = new Intent(this, Filter.class);
+        startActivityForResult(returnedGameList, FILTER_GAME);
     }
 
     public void HostGame(View view) {
@@ -202,28 +242,22 @@ public class Home extends AppCompatActivity {
 
     public void RefreshGames()
     {
-
         final int delay = 5000; //milliseconds
-        handler.postDelayed(new Runnable(){
+        runnable = new Runnable(){
             public void run(){
-                if(StartPage.isNetworkStatusAvialable(getApplicationContext())) {
+                if(Connection.isNetworkStatusAvialable(getApplicationContext())) {
                     if(allGames==null || allGames.size()==0)
                     {
                         updatedGames = StartPage.connectionUtil.GetAllGames(0);
-                        allGames = updatedGames;
                     }
                     else {
-                        updatedGames = StartPage.connectionUtil.GetAllGames(allGames.get(allGames.size() - 1).getGameNumber());
                         if (updatedGames != null) {
                             Home.this.allGamesReloadCount++;
                             if (Home.this.allGamesReloadCount < 6) {
-
-                                for (Game game : updatedGames) {
-                                    allGames.add(game);
-                                }
+                                updatedGames = StartPage.connectionUtil.GetAllGames(allGames.get(allGames.size() - 1).getGameNumber());
                             } else {
+                                allGames.clear();
                                 updatedGames = StartPage.connectionUtil.GetAllGames(0);
-                                allGames = updatedGames;
                                 Home.this.allGamesReloadCount = 0;
                             }
                             FillGamesListView();
@@ -262,30 +296,30 @@ public class Home extends AppCompatActivity {
                             finish();
                             startActivity(in);
                             dialog.cancel();
-                            handler.removeCallbacksAndMessages(null);
-
+                            handler.removeCallbacksAndMessages(runnable);
                         }
                     });
                     android.app.AlertDialog alertdialog=builder.create();
                     alertdialog.show();
+                    handler.postDelayed(runnable, delay);
                 }
-
-                handler.postDelayed(this, delay);
             }
-        }, delay);
+        };
+
     }
 
     @Override
     public void onPause() {
         super.onPause();  // Always call the superclass method first
 
-        handler.removeCallbacksAndMessages(null);
+        handler.removeCallbacksAndMessages(runnable);
     }
 
     @Override
     public void onResume() {
         super.onResume();  // Always call the superclass method first
-
-        RefreshGames();
+        if(needRefresh) {
+            RefreshGames();
+        }
     }
 }

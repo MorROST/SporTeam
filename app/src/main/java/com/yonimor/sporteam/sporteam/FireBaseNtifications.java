@@ -12,14 +12,14 @@ import com.google.firebase.iid.FirebaseInstanceIdService;
 
 public class FireBaseNtifications extends FirebaseInstanceIdService{
     private static final String TAG = "FireBaseNtifications";
-    String name;
+    String email;
 
 
     @Override
     public void onTokenRefresh() {
         String latestToken = FirebaseInstanceId.getInstance().getToken();
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        this.name = preferences.getString("name", "");
-        StartPage.connectionUtil.SendRegistrationToServer(this.name, latestToken);
+        this.email = preferences.getString("name", "");
+        StartPage.connectionUtil.SendRegistrationToServer(this.email, latestToken);
     }
 }

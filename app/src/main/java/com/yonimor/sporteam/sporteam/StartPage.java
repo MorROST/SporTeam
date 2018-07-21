@@ -30,6 +30,7 @@ public class StartPage extends Activity {
 
     static ConnectionUtil connectionUtil = null;
     private static final int PERMS_REQUEST_CODE = 123;
+    String autoLogin;
     String email;
     CheckBox keepLoged;
     int result;
@@ -38,7 +39,7 @@ public class StartPage extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_page);
-        if(isNetworkStatusAvialable(getApplicationContext())) {
+        if(Connection.isNetworkStatusAvialable(getApplicationContext())) {
             Toast.makeText(getApplicationContext(), "internet avialable", Toast.LENGTH_SHORT).show();
 
         } else {
@@ -58,9 +59,10 @@ public class StartPage extends Activity {
         {
             Toast.makeText(this, "Connected", Toast.LENGTH_LONG).show();
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+            this.autoLogin = preferences.getString("AutoLogin", "");
             this.email = preferences.getString("email", "");
 
-            if (!email.equals("") && !email.equals("null")) {
+            if (!autoLogin.equals("") && !autoLogin.equals("null") && !email.equals("")) {
                 finish();
                 Intent intent = new Intent(this, Home.class);
                 startActivity(intent);
@@ -68,7 +70,7 @@ public class StartPage extends Activity {
         }
         else if(result == ConnectionData.NOT_OK)
         {
-            AlertDialog.Builder builder=new AlertDialog.Builder(this);
+            /*AlertDialog.Builder builder=new AlertDialog.Builder(this);
             builder.setTitle("Connection Problem");
             builder.setMessage("No Connection to server please reload");
 
@@ -81,7 +83,8 @@ public class StartPage extends Activity {
                     dialog.cancel();
 
                 }
-            });
+            });*/
+            AlertDialog.Builder builder = Connection.connectionLostMessage(this);
             AlertDialog alertdialog=builder.create();
             alertdialog.show();
         }
@@ -180,17 +183,7 @@ public class StartPage extends Activity {
 
     }
 
-    public static boolean isNetworkStatusAvialable (Context context) {
-        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (connectivityManager != null)
-        {
-            NetworkInfo netInfos = connectivityManager.getActiveNetworkInfo();
-            if(netInfos != null)
-                if(netInfos.isConnected())
-                    return true;
-        }
-        return false;
-    }
+
 
     class AsyncClassConnect extends AsyncTask<Void, Void, Integer>{
 
@@ -224,10 +217,12 @@ public class StartPage extends Activity {
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
             SharedPreferences.Editor editor = preferences.edit();
             if (keepLoged.isChecked()) {
-                 editor.putString("email", email.getText().toString());
+                 editor.putString("AutoLogin", "yes");
             }
             Toast.makeText(this, "Hello " + name + "!", Toast.LENGTH_LONG).show();
             editor.putString("name", name);
+            editor.commit();
+            editor.putString("email", email.getText().toString());
             editor.commit();
             Intent in = new Intent(this, Home.class);
             startActivity(in);
